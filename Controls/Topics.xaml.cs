@@ -27,6 +27,7 @@ namespace Personalised_News_Feed.Controls
         public ObservableCollection<Topic> userFavoriteTopics;
         public ObservableCollection<Topic> userGeneralTopics;
         private RSSFeedConfig rssFeedConfig;
+        public Topic selectedTopic { get; set; }
         public Topics()
         {
             InitializeComponent();
@@ -36,6 +37,8 @@ namespace Personalised_News_Feed.Controls
             loadTopicData();
             Lbx_FavoriteTopics.ItemsSource = userFavoriteTopics;
             Lbx_GeneralTopics.ItemsSource = userGeneralTopics;
+            Lbx_FavoriteTopics.SelectedItem = userFavoriteTopics[0];
+            selectedTopic = (Topic)Lbx_FavoriteTopics.SelectedItem;
             this.DataContext = this;
         }
 
@@ -66,6 +69,37 @@ namespace Personalised_News_Feed.Controls
                 eachTopic.topicDetails = (from n in rssFeedConfig.topics where n.topicId == eachTopic.topicId select n).ToList()[0];
                 eachTopic.topicFeed = XMLSerializerWrapper.ReadXML<TopicFeed>("data\\TopicId" + eachTopic.topicId+".xml");
             }
+        }
+
+        private void Lbx_FavoriteTopics_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Lbx_FavoriteTopics.SelectedItem == null)
+            {
+                return;
+            }
+
+            if (Lbx_GeneralTopics.SelectedItem != null)
+            {
+                Lbx_GeneralTopics.SelectedItem = null;
+            }
+
+            selectedTopic = (Topic) Lbx_FavoriteTopics.SelectedItem;
+            
+        }
+
+        private void Lbx_GeneralTopics_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if(Lbx_GeneralTopics.SelectedItem == null)
+            {
+                return;
+            }
+
+            if(Lbx_FavoriteTopics.SelectedItem != null)
+            {
+                Lbx_FavoriteTopics.SelectedItem = null;
+            }
+
+            selectedTopic = (Topic)Lbx_GeneralTopics.SelectedItem;
         }
 
         //private void WriteContent()
