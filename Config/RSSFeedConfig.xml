@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rssFeed xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <topic>
+	<topicId>1</topicId>
+    <name>Machine Learning</name>
+    <url>https://www.google.com/alerts/feeds/15651442089402079696/356594644306460719</url>
+  </topic>
+  <topic>
+	<topicId>2</topicId>
+    <name>C#</name>
+    <url>https://www.google.com/alerts/feeds/15651442089402079696/356594644306460719</url>
+  </topic>
+  <topic>
+	<topicId>3</topicId>
+    <name>ISO 9241</name>
+    <url>https://www.google.com/alerts/feeds/15651442089402079696/356594644306460719</url>
+  </topic>
+  <topic>
+	<topicId>4</topicId>
+    <name>India</name>
+    <url>https://www.google.com/alerts/feeds/15651442089402079696/356594644306460719</url>
+  </topic>
+  <topic>
+	<topicId>5</topicId>
+    <name>IoT</name>
+    <url>https://www.google.com/alerts/feeds/15651442089402079696/356594644306460719</url>
+  </topic>
+</rssFeed>

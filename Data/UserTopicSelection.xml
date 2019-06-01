@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<userSelection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <userTopic>
+    <userId>1</userId>
+    <topic>
+      <topicId>1</topicId>
+      <isFavorite>true</isFavorite>
+    </topic>
+    <topic>
+      <topicId>2</topicId>
+      <isFavorite>false</isFavorite>
+    </topic>
+	<topic>
+      <topicId>3</topicId>
+      <isFavorite>true</isFavorite>
+    </topic>
+	<topic>
+      <topicId>4</topicId>
+      <isFavorite>false</isFavorite>
+    </topic>
+	<topic>
+      <topicId>5</topicId>
+      <isFavorite>false</isFavorite>
+    </topic>
+  </userTopic>
+  <userTopic>
+    <userId>2</userId>
+    <topic>
+      <topicId>1</topicId>
+      <isFavorite>false</isFavorite>
+    </topic>
+    <topic>
+      <topicId>3</topicId>
+      <isFavorite>true</isFavorite>
+    </topic>
+  </userTopic>
+</userSelection>

@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Personalised_News_Feed"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <FontFamily x:Key="FontAwesome">pack://application:,,,/Fonts/fontawesome-webcont#FontAwesome</FontFamily>
     </Application.Resources>
 </Application>

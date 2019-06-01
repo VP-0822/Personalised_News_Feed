@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="Personalised_News_Feed.Controls.SideBarItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="100">
+    <Grid Background="Azure">
+        <Grid.ColumnDefinitions>
+            <!-- Sidebar items Selected -->
+            <ColumnDefinition Width="Auto"/>
+            <!-- Sidebar items Icon and text -->
+            <ColumnDefinition Width="Auto"/>
+            <!-- Sidebar items Margin -->
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Sidebar items Selected -->
+        <Border Background="Blue" Width="10" Visibility="{Binding IsSelectedVisibility}"></Border>
+        <!-- Sidebar items Icon and text -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Border Width="70" VerticalAlignment="Top" Margin="10,10,0,0">
+                <TextBlock FontFamily="{StaticResource FontAwesome}" Text="{Binding IconPath}" FontSize="50" Margin="15, 0, 15, 0"></TextBlock>
+            </Border>
+            <TextBlock Grid.Row="1" Text="{Binding Title}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
+        </Grid>
+    </Grid>
+</UserControl>
