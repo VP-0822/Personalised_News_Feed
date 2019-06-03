@@ -1,9 +1,11 @@
-﻿using Personalised_News_Feed.Classes.Core;
+﻿using HtmlAgilityPack;
+using Personalised_News_Feed.Classes.Core;
 using Personalised_News_Feed.Core;
 using Personalised_News_Feed.Core.Converters;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,12 +24,20 @@ namespace Personalised_News_Feed.Controls
     /// <summary>
     /// Interaction logic for Topics.xaml
     /// </summary>
-    public partial class Topics : UserControl
+    public partial class Topics : UserControl, INotifyPropertyChanged
     {
         public ObservableCollection<Topic> userFavoriteTopics;
         public ObservableCollection<Topic> userGeneralTopics;
         private RSSFeedConfig rssFeedConfig;
-        public Topic selectedTopic { get; set; }
+        public Topic selectedTopic {
+            get { return selectedTopic_; }
+            set
+            {
+                selectedTopic_ = value;
+                OnPropertyChanged("selectedTopic");
+            }
+        }
+        private Topic selectedTopic_;
         public Topics()
         {
             InitializeComponent();
@@ -39,6 +49,7 @@ namespace Personalised_News_Feed.Controls
             Lbx_GeneralTopics.ItemsSource = userGeneralTopics;
             Lbx_FavoriteTopics.SelectedItem = userFavoriteTopics[0];
             selectedTopic = (Topic)Lbx_FavoriteTopics.SelectedItem;
+
             this.DataContext = this;
         }
 
@@ -121,5 +132,30 @@ namespace Personalised_News_Feed.Controls
 
         //    XMLSerializerWrapper.WriteXML<UserTopics>(uts, "UserTopicSelection.xml");
         //}
+
+        private void OnPropertyChanged(string v)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(v));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void Grd_FeedEntry_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid selectedGrid = (Grid)sender;
+            Entry selectedEntry = (Entry)selectedGrid.DataContext;
+
+            string tabHeader = selectedEntry.title.Substring(0,20);
+            TabItem newTab = new TabItem { Header = tabHeader, DataContext = selectedEntry };
+            newTab.Content = new TabItemBrowserControl();
+            //Tct_Topic_Tabs.Items.Add(new TabItem { Header= "Hello"});
+
+            Tct_Topic_Tabs.Items.Add(newTab);
+            Tct_Topic_Tabs.SelectedItem = newTab;
+        }
     }
 }
