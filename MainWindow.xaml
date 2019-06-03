@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:controls="clr-namespace:Personalised_News_Feed.Controls"
+        xmlns:resX="clr-namespace:Personalised_News_Feed.Properties"
         mc:Ignorable="d"
-        Title="MainWindow" WindowState="Maximized" WindowStyle="ToolWindow">
+        Title="MainWindow" WindowState="Maximized" WindowStyle="ToolWindow"
+        FlowDirection="{Binding Mode=OneTime, Source={x:Static resX:Resources.flowDirection}}" x:Name="W_Main_Window" Loaded="W_Main_Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"></ColumnDefinition>
@@ -20,13 +22,18 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="Profile"/>
-            <controls:SideBarItemControl Grid.Row="1" x:Name="Sbic_topics" VerticalAlignment="Top" Title="Topics" IsActive="True" IconPath="&#xf086;"/>
-            <controls:SideBarItemControl Grid.Row="2" x:Name="Sbic_history" VerticalAlignment="Top" Title="Activities" IsActive="False" IconPath="&#xf086;"/>
-            <controls:SideBarItemControl Grid.Row="3" x:Name="Sbic_activity" VerticalAlignment="Top" Title="Bookmarks" IsActive="False" IconPath="&#xf086;"/>
+            <controls:SideBarItemControl Grid.Row="1" x:Name="Sbic_topics" VerticalAlignment="Top" Title="{x:Static resX:Resources.txt_sidebar_topics}" IsActive="True" IconPath="&#xf086;" MouseUp="Sbic_topics_MouseUp"/>
+            <controls:SideBarItemControl Grid.Row="2" x:Name="Sbic_history" VerticalAlignment="Top" Title="Activities" IsActive="False" IconPath="&#xf086;" MouseUp="Sbic_history_MouseUp"/>
+            <controls:SideBarItemControl Grid.Row="3" x:Name="Sbic_bookmarks" VerticalAlignment="Top" Title="Bookmarks" IsActive="False" IconPath="&#xf086;"/>
+            <ComboBox Grid.Row="5" Name="Cmb_Languages" Height="20" Width="80" VerticalAlignment="Top">
+                <ComboBoxItem Content="English"></ComboBoxItem>
+                <ComboBoxItem Content="Arabic"></ComboBoxItem>
+            </ComboBox>
         </Grid>
-
-        <controls:Topics Grid.Column="1"></controls:Topics>
+        <ContentControl Content="{Binding DisplayUserControl}" Grid.Column="1"/>
+        
     </Grid>
 </Window>

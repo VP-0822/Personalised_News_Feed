@@ -118,12 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="flowDirection" xml:space="preserve">
-    <value>LeftToRight</value>
+    <value>RightToLeft</value>
   </data>
   <data name="txt_sidebar_topics" xml:space="preserve">
-    <value>Topics 1</value>
-  </data>
-  <data name="win_appName" xml:space="preserve">
-    <value>Personalised news feed</value>
+    <value>المواضيع</value>
   </data>
 </root>

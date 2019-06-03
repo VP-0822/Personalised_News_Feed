@@ -34,8 +34,9 @@ namespace Personalised_News_Feed.Controls
 
         public string Id { get { return (string)GetValue(ItemIdProperty); } set { SetValue(ItemIdProperty, value); } }
 
-        public string IsSelectedVisibility { get { if(!IsActive) { return "Hidden"; } else { return ""; }
-                    } }
+        public string IsSelectedVisibility { get { if(!IsActive) { return "Hidden"; } else { return "Visible"; }
+                    } set { IsSelectedVisibility = value; }
+        }
 
         public SideBarItemControl()
         {
