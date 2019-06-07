@@ -38,6 +38,8 @@ namespace Personalised_News_Feed.Controls
             }
         }
         private Topic selectedTopic_;
+
+        public ObservableCollection<Topic> removedTopics = new ObservableCollection<Topic>();
         public Topics()
         {
             InitializeComponent();
@@ -94,18 +96,18 @@ namespace Personalised_News_Feed.Controls
                 Lbx_GeneralTopics.SelectedItem = null;
             }
 
-            selectedTopic = (Topic) Lbx_FavoriteTopics.SelectedItem;
-            
+            selectedTopic = (Topic)Lbx_FavoriteTopics.SelectedItem;
+
         }
 
         private void Lbx_GeneralTopics_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(Lbx_GeneralTopics.SelectedItem == null)
+            if (Lbx_GeneralTopics.SelectedItem == null)
             {
                 return;
             }
 
-            if(Lbx_FavoriteTopics.SelectedItem != null)
+            if (Lbx_FavoriteTopics.SelectedItem != null)
             {
                 Lbx_FavoriteTopics.SelectedItem = null;
             }
@@ -156,6 +158,78 @@ namespace Personalised_News_Feed.Controls
 
             Tct_Topic_Tabs.Items.Add(newTab);
             Tct_Topic_Tabs.SelectedItem = newTab;
+        }
+
+        private void Img_Add_To_Favorites_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if(selectedTopic.isFavorite)
+            {
+                userFavoriteTopics.Remove(selectedTopic);
+                userGeneralTopics.Add(selectedTopic);
+                selectedTopic.isFavorite = !selectedTopic.isFavorite;
+            }
+            else
+            {
+                userGeneralTopics.Remove(selectedTopic);
+                userFavoriteTopics.Add(selectedTopic);
+                selectedTopic.isFavorite = !selectedTopic.isFavorite;
+            }
+        }
+
+        private void Btn_Add_Topic_Click(object sender, RoutedEventArgs e)
+        {
+
+
+        }
+
+        private void Tbx_filter_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string query = Tbx_filter.Text;
+
+            if (string.IsNullOrEmpty(query))
+            {
+                Lbx_FavoriteTopics.ItemsSource = userFavoriteTopics;
+                Lbx_GeneralTopics.ItemsSource = userGeneralTopics;
+                return;
+            }
+
+            var favResults = from n in userFavoriteTopics where n.topicDetails.name.ToLower().Contains(query.ToLower()) select n;
+            var genResults = from n in userGeneralTopics where n.topicDetails.name.ToLower().Contains(query.ToLower()) select n;
+
+            Lbx_FavoriteTopics.ItemsSource = favResults;
+            Lbx_GeneralTopics.ItemsSource = genResults;
+        }
+
+        private void Btn_Remove_Item_Click(object sender, RoutedEventArgs e)
+        {
+            Button removeTopic = (Button)sender;
+            int selectedTopicId = (int)removeTopic.Tag;
+            List<Topic> selectedTopicsForRemove = (List<Topic>)(from n in userFavoriteTopics where n.topicId == selectedTopicId select n).ToList();
+            Topic selectedTopicForRemove = null;
+            if (selectedTopicsForRemove != null && selectedTopicsForRemove.Count > 0)
+            {
+                selectedTopicForRemove = selectedTopicsForRemove[0];
+            }
+            if (selectedTopicForRemove != null)
+            {
+                userFavoriteTopics.Remove(selectedTopicForRemove);
+                removedTopics.Add(selectedTopicForRemove);
+                return;
+            }
+
+            selectedTopicsForRemove = (List<Topic>)(from n in userGeneralTopics where n.topicId == selectedTopicId select n).ToList();
+
+            if (selectedTopicsForRemove != null && selectedTopicsForRemove.Count > 0)
+            {
+                selectedTopicForRemove = selectedTopicsForRemove[0];
+            }
+            if (selectedTopicForRemove != null)
+            {
+                userGeneralTopics.Remove(selectedTopicForRemove);
+                removedTopics.Add(selectedTopicForRemove);
+                return;
+            }
+
         }
     }
 }

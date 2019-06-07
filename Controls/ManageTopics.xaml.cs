@@ -16,15 +16,23 @@ using System.Windows.Shapes;
 namespace Personalised_News_Feed.Controls
 {
     /// <summary>
-    /// Interaction logic for SideBarItemControl.xaml
+    /// Interaction logic for ManageTopics.xaml
     /// </summary>
-    public partial class SideBarItemControl : UserControl
+    public partial class ManageTopics : UserControl
     {
+        private Topics topicUserControl;
 
-        public SideBarItemControl()
+        public ManageTopics()
         {
             InitializeComponent();
-            //this.DataContext = this;
         }
+
+        public ManageTopics(Topics parentObject)
+        {
+            topicUserControl = parentObject;
+            InitializeComponent();
+        }
+
+
     }
 }

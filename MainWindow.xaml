@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:Personalised_News_Feed.Controls"
         xmlns:resX="clr-namespace:Personalised_News_Feed.Properties"
         mc:Ignorable="d"
-        Title="MainWindow" WindowState="Maximized" WindowStyle="ToolWindow"
+        Title="Personalised News Feed" WindowState="Maximized" WindowStyle="ToolWindow"
         FlowDirection="{Binding Mode=OneTime, Source={x:Static resX:Resources.flowDirection}}" x:Name="W_Main_Window" Loaded="W_Main_Window_Loaded">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -15,23 +15,31 @@
         </Grid.ColumnDefinitions>
 
         <!-- Main background for side panel-->
-        <Grid Grid.Column="0" Background="AntiqueWhite">
+        <Grid Grid.Column="0" Background="AntiqueWhite" Margin="5,0,0,0">
             <Grid.RowDefinitions >
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="70"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="Profile"/>
-            <controls:SideBarItemControl Grid.Row="1" x:Name="Sbic_topics" VerticalAlignment="Top" Title="{x:Static resX:Resources.txt_sidebar_topics}" IsActive="True" IconPath="&#xf086;" MouseUp="Sbic_topics_MouseUp"/>
-            <controls:SideBarItemControl Grid.Row="2" x:Name="Sbic_history" VerticalAlignment="Top" Title="Activities" IsActive="False" IconPath="&#xf086;" MouseUp="Sbic_history_MouseUp"/>
-            <controls:SideBarItemControl Grid.Row="3" x:Name="Sbic_bookmarks" VerticalAlignment="Top" Title="Bookmarks" IsActive="False" IconPath="&#xf086;"/>
-            <ComboBox Grid.Row="5" Name="Cmb_Languages" Height="20" Width="80" VerticalAlignment="Top">
-                <ComboBoxItem Content="English"></ComboBoxItem>
-                <ComboBoxItem Content="Arabic"></ComboBoxItem>
+            <ComboBox Grid.Row="0" Name="Cmb_Languages" Height="20" Width="80" VerticalAlignment="Bottom" Margin="0,0,0,10" SelectionChanged="Cmb_Languages_SelectionChanged">
+                
             </ComboBox>
+            <TextBlock Grid.Row="1" Text="Profile"/>
+            <!--<controls:SideBarItemControl Grid.Row="1" x:Name="Sbic_topics" VerticalAlignment="Top" Title="{x:Static resX:Resources.txt_sidebar_topics}" IsActive="True" IconPath="&#xf086;" MouseUp="Sbic_topics_MouseUp"/>
+            <controls:SideBarItemControl Grid.Row="2" x:Name="Sbic_history" VerticalAlignment="Top" Title="Activities" IsActive="False" IconPath="&#xf086;" MouseUp="Sbic_history_MouseUp"/>
+            <controls:SideBarItemControl Grid.Row="3" x:Name="Sbic_bookmarks" VerticalAlignment="Top" Title="Bookmarks" IsActive="False" IconPath="&#xf086;"/>-->
+            <StackPanel Orientation="Vertical" Grid.Row="2" >
+                <ItemsControl x:Name="Itc_Side_Items">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid x:Name="Grd_SideBarItem" MouseUp="Grd_SideBarItem_MouseUp">
+                                <controls:SideBarItemControl DataContext="{Binding}"></controls:SideBarItemControl>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+            
         </Grid>
         <ContentControl Content="{Binding DisplayUserControl}" Grid.Column="1"/>
         

@@ -17,6 +17,11 @@ using System.Threading;
 using Personalised_News_Feed.Delete;
 using System.ComponentModel;
 using Personalised_News_Feed.Controls;
+using System.Collections.ObjectModel;
+using System.Resources;
+using Personalised_News_Feed.Properties;
+using System.Globalization;
+using System.Reflection;
 
 namespace Personalised_News_Feed
 {
@@ -26,6 +31,9 @@ namespace Personalised_News_Feed
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         private UserControl _DisplayUserControl;
+        public ObservableCollection<SideBarItem> sideBarItems;
+        public List<string> cultures = new List<string> { "en english", "ar arabic" };
+        //Use GetAvailableCultures()
 
         public UserControl DisplayUserControl
         {
@@ -47,26 +55,40 @@ namespace Personalised_News_Feed
             //InitializeUIComponents();
             //WelcomePage welcome = new WelcomePage();
             //frm_main.NavigationService.Navigate(welcome);
-            string language = "en";
+            string language = Properties.Settings.Default.language;
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(language);
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(language);
 
             InitializeComponent();
+
+            sideBarItems = new ObservableCollection<SideBarItem>();
+            SideBarItem topics = new SideBarItem { ItemId = "1", ItemTitle = "Topics", IsActive = "Visible", IconPath = @"\Resources\Images\Icons\document_blue_t.png" };
+            SideBarItem history = new SideBarItem { ItemId = "2", ItemTitle = "History", IsActive = "Hidden", IconPath = @"\Resources\Images\Icons\history_blue_t.png" };
+            SideBarItem bookmarks = new SideBarItem { ItemId = "3", ItemTitle = "Bookmarks", IsActive = "Hidden", IconPath = @"\Resources\Images\Icons\bookmark_blue_t.png" };
+
+            sideBarItems.Add(topics);
+            sideBarItems.Add(history);
+            sideBarItems.Add(bookmarks);
+            Itc_Side_Items.ItemsSource = sideBarItems;
+
+            loadLanguageCombobox();
             this.DataContext = this;
+            
         }
 
-        //private void InitializeUIComponents()
-        //{
-        //    sideBarItems = new List<SideBarItem>();
+        private void loadLanguageCombobox()
+        {
+            List<ComboBoxItem> cultureItems = new List<ComboBoxItem>();
+            foreach(string culture in cultures)
+            {
+                ComboBoxItem item = new ComboBoxItem();
+                item.Content = culture;
+                cultureItems.Add(item);
+            }
 
-        //    SideBarItem topics = new SideBarItem() { ItemTitle = "Topics", IsActive = true, IconPath= "&#xf086;", ItemId="1" };
-        //    SideBarItem activities = new SideBarItem() { ItemTitle = "Activities", IsActive = false, IconPath = "&#xf086;", ItemId = "2" };
-        //    SideBarItem bookMarks = new SideBarItem() { ItemTitle = "Bookmarks", IsActive = false, IconPath = "&#xf086;", ItemId = "3" };
-        //    sideBarItems.Add(topics);
-        //    sideBarItems.Add(activities);
-        //    sideBarItems.Add(bookMarks);
-
-        //}
+            Cmb_Languages.ItemsSource = cultureItems;
+            //Cmb_Languages.SelectedItem = cultureItems[0];
+        }
 
         private void OnPropertyChanged(string v)
         {
@@ -84,20 +106,56 @@ namespace Personalised_News_Feed
             DisplayUserControl = new Topics();
         }
 
-        private void Sbic_topics_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Grd_SideBarItem_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            DisplayUserControl = new Topics();
-            Sbic_history.IsActive = false;
-            Sbic_bookmarks.IsActive = false;
-            Sbic_topics.IsActive = true;
+            Grid selectedGrid = (Grid)sender;
+            SideBarItem selectedSideBarItem = (SideBarItem)selectedGrid.DataContext;
+            foreach(SideBarItem sideBarItem in sideBarItems)
+            {
+                if(sideBarItem.ItemId.Equals(selectedSideBarItem.ItemId))
+                {
+                    sideBarItem.IsActive = "Visible";
+                }
+                else
+                {
+                    sideBarItem.IsActive = "Hidden";
+                }
+            }
+
+            switch(selectedSideBarItem.ItemId)
+            {
+                case "1":
+                    DisplayUserControl = new Topics();
+                    break;
+                case "2":
+                    DisplayUserControl = new History();
+                    break;
+                case "3":
+                    DisplayUserControl = new Bookmarks();
+                    break;
+                default:
+                    break;
+            }
         }
 
-        private void Sbic_history_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Cmb_Languages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DisplayUserControl = new History();
-            Sbic_topics.IsActive = false;
-            Sbic_bookmarks.IsActive = false;
-            Sbic_history.IsActive = true;
+            ComboBox cultureComboBox = (ComboBox)sender;
+            var cultureText = ((ComboBoxItem)cultureComboBox.SelectedItem).Content.ToString().Split(' ')[0];
+            Properties.Settings.Default.language = cultureText;
+            Properties.Settings.Default.Save();
+            Close();
         }
+
+        //private IEnumerable<string> GetAvailableCultures()
+        //{
+        //    List<string> results = new List<string>();
+        //    ResourceManager rm = new ResourceManager(typeof(Resources));
+        //    CultureInfo[] cultureInfos = CultureInfo.GetCultures(CultureTypes.AllCultures);
+        //    foreach(CultureInfo cultureSelected in cultureInfos)
+        //    {
+
+        //    }
+        //}
     }
 }

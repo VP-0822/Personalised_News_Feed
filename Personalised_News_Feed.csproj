@@ -68,6 +68,9 @@
     <Compile Include="Controls\History.xaml.cs">
       <DependentUpon>History.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ManageTopics.xaml.cs">
+      <DependentUpon>ManageTopics.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Sidebar\SideBarItemControl.xaml.cs">
       <DependentUpon>SideBarItemControl.xaml</DependentUpon>
     </Compile>
@@ -97,6 +100,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\History.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ManageTopics.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -174,6 +181,24 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Data\UserTopicSelection.xml" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\bookmark.png" />
+    <Resource Include="Resources\Images\Icons\bookmarkT.png" />
+    <Resource Include="Resources\Images\Icons\bookmark_blue.png" />
+    <Resource Include="Resources\Images\Icons\bookmark_blue_t.png" />
+    <Resource Include="Resources\Images\Icons\bookmark_done.png" />
+    <Resource Include="Resources\Images\Icons\bookmark_undone.png" />
+    <Resource Include="Resources\Images\Icons\documentT.png" />
+    <Resource Include="Resources\Images\Icons\document_blue.png" />
+    <Resource Include="Resources\Images\Icons\document_blue_t.png" />
+    <Resource Include="Resources\Images\Icons\history.png" />
+    <Resource Include="Resources\Images\Icons\historyT.png" />
+    <Resource Include="Resources\Images\Icons\history_blue.png" />
+    <Resource Include="Resources\Images\Icons\history_blue_t.png" />
+    <Resource Include="Resources\Images\Icons\profile_blue.png" />
+    <Resource Include="Resources\Images\Icons\topics.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
