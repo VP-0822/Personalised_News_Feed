@@ -61,14 +61,21 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Classes\Core\Converters\ConditionalTextDisplay.cs" />
+    <Compile Include="Classes\Core\UserBookmark.cs" />
     <Compile Include="Classes\Core\UserHistory.cs" />
     <Compile Include="Classes\Core\UserTopics.cs" />
     <Compile Include="Classes\UI\SideBarItem.cs" />
     <Compile Include="Controls\Bookmarks.xaml.cs">
       <DependentUpon>Bookmarks.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BookmarkTabHeaderControl.xaml.cs">
+      <DependentUpon>BookmarkTabHeaderControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\History.xaml.cs">
       <DependentUpon>History.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HistoryTabHeaderControl.xaml.cs">
+      <DependentUpon>HistoryTabHeaderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ManageTopics.xaml.cs">
       <DependentUpon>ManageTopics.xaml</DependentUpon>
@@ -79,6 +86,12 @@
     <Compile Include="Classes\Core\Converters\XMLSerializerWrapper.cs" />
     <Compile Include="Classes\Core\RSSFeedConfig.cs" />
     <Compile Include="Classes\Core\TopicFeed.cs" />
+    <Compile Include="Controls\TabHeaderControl.xaml.cs">
+      <DependentUpon>TabHeaderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TabItemBookmarkBrowserControl.xaml.cs">
+      <DependentUpon>TabItemBookmarkBrowserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TabItemBrowserControl.xaml.cs">
       <DependentUpon>TabItemBrowserControl.xaml</DependentUpon>
     </Compile>
@@ -98,7 +111,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\BookmarkTabHeaderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\History.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\HistoryTabHeaderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -107,6 +128,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\Sidebar\SideBarItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TabHeaderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TabItemBookmarkBrowserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -26,7 +26,7 @@
         </Grid>
         <Grid Grid.Row="1" Margin="10, 20, 10, 10">
             <TabControl TabStripPlacement="Top" x:Name="Tct_Topic_Tabs">
-                <TabItem Header="{Binding selectedTopic.topicDetails.name}" FontSize="16" FontWeight="Bold">
+                <TabItem FontSize="16" FontWeight="Bold" Header="{Binding selectedTopic.topicDetails.name}" Tag="-1">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <Grid >
                             <Grid.RowDefinitions>
@@ -52,12 +52,9 @@
                                                         <Grid Grid.Row="0" Margin="10,5,10,0">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="*"></ColumnDefinition>
-                                                                <ColumnDefinition Width="Auto"></ColumnDefinition>
                                                             </Grid.ColumnDefinitions>
                                                             <TextBlock FontSize="16" Text="{Binding title}"/>
-                                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Margin="0, 0, 20, 0">
-                                                                <Button Content="Not helpful" Height="20" FontSize="12" FontWeight="Normal" />
-                                                            </StackPanel>
+                                                            
                                                         </Grid>
                                                         <TextBlock Grid.Row="1" Text="{Binding link.href}" FontSize="12" FontWeight="Normal" FontStyle="Italic" Margin="10,5,10,0" VerticalAlignment="Center" Width="800" TextWrapping="Wrap" HorizontalAlignment="Left"></TextBlock>
                                                         <TextBlock Grid.Row="2" FontSize="12" FontWeight="Normal" VerticalAlignment="Center" HorizontalAlignment="Left" TextWrapping="Wrap" Text="{Binding content}" Margin="10,5,10,10" Width="800"></TextBlock>

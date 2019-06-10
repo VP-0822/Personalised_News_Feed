@@ -1,4 +1,4 @@
-﻿using Personalised_News_Feed.Core;
+﻿using Personalised_News_Feed.Classes.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,24 +18,20 @@ using System.Windows.Shapes;
 namespace Personalised_News_Feed.Controls
 {
     /// <summary>
-    /// Interaction logic for TabItemBrowserControl.xaml
+    /// Interaction logic for TabItemBookmarkBrowserControl.xaml
     /// </summary>
-    public partial class TabItemBrowserControl : UserControl
+    public partial class TabItemBookmarkBrowserControl : UserControl
     {
-        private Topics topics;
-
-        public TabItemBrowserControl(Topics parentTopics)
+        public TabItemBookmarkBrowserControl()
         {
             InitializeComponent();
-            topics = parentTopics;
         }
 
-        private void TbIBC_NewTab_Loaded(object sender, RoutedEventArgs e)
+        private void TbIBC_NewBookmarkTab_Loaded(object sender, RoutedEventArgs e)
         {
-            TabItemBrowserControl control = (TabItemBrowserControl)sender;
-            Entry entry = (Entry)control.DataContext;
-            Wbs_TabBrowser.Navigate(entry.link.href);
-            
+            TabItemBookmarkBrowserControl control = (TabItemBookmarkBrowserControl)sender;
+            BookmarkItem entry = (BookmarkItem)control.DataContext;
+            Wbs_TabBrowser.Navigate(entry.Link);
         }
 
         private void Wbs_TabBrowser_Navigating(object sender, NavigatingCancelEventArgs e)
@@ -45,13 +41,6 @@ namespace Personalised_News_Feed.Controls
                 null, this.Wbs_TabBrowser, new object[] { });
 
             activeX.Silent = true;
-        }
-
-        private void Btn_Add_Bookmark_Click(object sender, RoutedEventArgs e)
-        {
-            Button button = (Button)sender;
-            Entry entry = (Entry)button.DataContext;
-            topics.writeBookmarkToFile(entry);
         }
     }
 }

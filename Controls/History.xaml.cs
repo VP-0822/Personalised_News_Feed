@@ -35,6 +35,16 @@ namespace Personalised_News_Feed.Controls
 
         private string NoDataTodayVisibility_ { get; set; } = "Visible";
 
+        public TopicHistory globalSelectedEntry { get; set; }
+
+        public string tagHeader
+        {
+            get
+            {
+                return (globalSelectedEntry.LinkTitle.Length > 20) ? globalSelectedEntry.LinkTitle.Substring(0, 20) : globalSelectedEntry.LinkTitle;
+            }
+        }
+
         public string NoDataTodayVisibility
         {
             get { return NoDataTodayVisibility_; }
@@ -137,14 +147,13 @@ namespace Personalised_News_Feed.Controls
             NoTabVisibility = "Hidden";
             Grid selectedGrid = (Grid)sender;
             TopicHistory selectedEntry = (TopicHistory)selectedGrid.DataContext;
-
-            string tabHeader = (selectedEntry.LinkTitle.Length > 20) ? selectedEntry.LinkTitle.Substring(0, 20) : selectedEntry.LinkTitle;
+            globalSelectedEntry = selectedEntry;
             if (Tct_Topic_Tabs.Items != null)
             {
                 int index = 0;
                 foreach (TabItem tabItem in Tct_Topic_Tabs.Items)
                 {
-                    if ((string)tabItem.Header == tabHeader)
+                    if ((string)tabItem.Tag == selectedEntry.Link)
                     {
                         Tct_Topic_Tabs.SelectedItem = tabItem;
                         tabItem.IsSelected = true;
@@ -154,7 +163,7 @@ namespace Personalised_News_Feed.Controls
                     index++;
                 }
             }
-            TabItem newTab = new TabItem { Header = tabHeader, DataContext = selectedEntry };
+            TabItem newTab = new TabItem { Header = new HistoryTabHeaderControl() { DataContext = this }, DataContext = selectedEntry , Tag = selectedEntry.Link};
             newTab.Content = new TabItemHistoryBrowserControl();
 
             Tct_Topic_Tabs.Items.Add(newTab);

@@ -33,6 +33,9 @@ namespace Personalised_News_Feed.Controls
         private AllUserHistory allUserHistory;
         private UserHistory userHistory { get; set; }
 
+        private AllUserBookmark allUserBookmark;
+        private UserBookmark userBookmark { get; set; }
+
         private UserTopics allUsers;
         private UserTopic selectedUser;
 
@@ -72,6 +75,7 @@ namespace Personalised_News_Feed.Controls
             ReadTopics();
             loadTopicData();
             loadHistory();
+            loadBookmarks();
             Lbx_FavoriteTopics.ItemsSource = userFavoriteTopics;
             Lbx_GeneralTopics.ItemsSource = userGeneralTopics;
             Lbx_FavoriteTopics.SelectedItem = userFavoriteTopics[0];
@@ -126,23 +130,19 @@ namespace Personalised_News_Feed.Controls
 
         private void loadHistory()
         {
-            //AllUserHistory ah = new AllUserHistory();
-            //List<UserHistory> asd = new List<UserHistory>();
-            //ah.UsersHistory = asd;
-            //UserHistory uh = new UserHistory();
-            //TopicHistory th = new TopicHistory();
-            //th.TopicName = "asdad";
-            //th.LinkTitle = "asdad asd";
-            //th.Link = "www.google.com";
-            //th.BrowsedDate = DateTime.Now;
-            //uh.UserId = 1;
-            //uh.Histories = new List<TopicHistory>() { th };
-            //asd.Add(uh);
-            //XMLSerializerWrapper.WriteXML<AllUserHistory>(ah, "Data\\UserHistory.xml");
-            allUserHistory = XMLSerializerWrapper.ReadXML<AllUserHistory>("Data\\userHistory.xml");
+            allUserHistory = XMLSerializerWrapper.ReadXML<AllUserHistory>("Data\\UserHistory.xml");
             if (allUserHistory != null)
             {
                 userHistory = (from n in allUserHistory.UsersHistory where n.UserId == 1 select n).ToList()[0];
+            }
+        }
+
+        private void loadBookmarks()
+        {
+            allUserBookmark = XMLSerializerWrapper.ReadXML<AllUserBookmark>("Data\\UserBookmarks.xml");
+            if(allUserBookmark != null)
+            {
+                userBookmark = (from n in allUserBookmark.UserBookmarks where n.UserId == 1 select n).ToList()[0];
             }
         }
 
@@ -364,5 +364,26 @@ namespace Personalised_News_Feed.Controls
             XMLSerializerWrapper.WriteXML<AllUserHistory>(allUserHistory, "Data\\UserHistory.xml");
 
         }
+
+        public void writeBookmarkToFile(Entry selectedEntry)
+        {
+            BookmarkItem bookmarkItem = new BookmarkItem();
+            bookmarkItem.BookmarkedDate = DateTime.Now;
+            bookmarkItem.Link = selectedEntry.link.href;
+            bookmarkItem.LinkTitle = selectedEntry.title;
+
+            foreach(TopicWiseBookmark twBookmark in userBookmark.TopicWiseBookmarks)
+            {
+                if(twBookmark.TopicName.ToLower().Equals(selectedTopic.topicDetails.name.ToLower()))
+                {
+                    twBookmark.Bookmarks.Add(bookmarkItem);
+                    List<BookmarkItem> filteredBookmarkItems = (from n in twBookmark.Bookmarks select n).OrderByDescending(x => x.BookmarkedDate).ToList();
+                    twBookmark.Bookmarks = filteredBookmarkItems;
+                }
+            }
+
+            XMLSerializerWrapper.WriteXML<AllUserBookmark>(allUserBookmark, "Data\\UserBookmarks.xml");
+        }
+
     }
 }

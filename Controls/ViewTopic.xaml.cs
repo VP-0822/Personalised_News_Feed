@@ -23,6 +23,16 @@ namespace Personalised_News_Feed.Controls
     {
         private Topics topics;
 
+        public Entry globalSelectedEntry { get; set; }
+
+        public string tagHeader
+        {
+            get
+            {
+                return (globalSelectedEntry.title.Length > 20) ? globalSelectedEntry.title.Substring(0, 20) : globalSelectedEntry.title;
+            }
+        }
+
         public ViewTopic()
         {
             InitializeComponent();
@@ -50,14 +60,13 @@ namespace Personalised_News_Feed.Controls
         {
             Grid selectedGrid = (Grid)sender;
             Entry selectedEntry = (Entry)selectedGrid.DataContext;
-
-            string tabHeader = selectedEntry.title.Substring(0, 20);
+            globalSelectedEntry = selectedEntry;
             if(Tct_Topic_Tabs.Items != null)
             {
                 int index = 0;
                 foreach(TabItem tabItem in Tct_Topic_Tabs.Items)
                 {
-                    if((string)tabItem.Header == tabHeader)
+                    if((string)tabItem.Tag == selectedEntry.id)
                     {
                         Tct_Topic_Tabs.SelectedItem = tabItem;
                         tabItem.IsSelected = true;
@@ -67,12 +76,12 @@ namespace Personalised_News_Feed.Controls
                     index++;
                 }
             }
-            TabItem newTab = new TabItem { Header = tabHeader, DataContext = selectedEntry };
-            newTab.Content = new TabItemBrowserControl();
+            TabItem newTab = new TabItem { Header = new TabHeaderControl() { DataContext = this}, DataContext = selectedEntry, Tag = selectedEntry.id};
+            newTab.Content = new TabItemBrowserControl(topics);
 
             Tct_Topic_Tabs.Items.Add(newTab);
             newTab.IsSelected = true;
-            topics.writeHistoryToFile(selectedEntry);
+            //topics.writeHistoryToFile(selectedEntry);
             Dispatcher.BeginInvoke((Action)(() => Tct_Topic_Tabs.SelectedIndex = (Tct_Topic_Tabs.Items.Count - 1)));
         }
 

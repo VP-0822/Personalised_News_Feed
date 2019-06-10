@@ -7,6 +7,78 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Work in progress...(Bookmarks)" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
+            <Grid Background="Lavender">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="60"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Bookmarks" HorizontalAlignment="Left" FontSize="25" Margin="20, 20, 0, 10" VerticalAlignment="Center"></TextBlock>
+                <Grid Grid.Row="1" Margin="20, 0, 0, 10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="90"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Filter for topic: " FontSize="13" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBox Width="150" Height="25" x:Name="Tbx_filter" TextChanged="Tbx_filter_TextChanged" Grid.Column="1" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                </Grid>
+                <Grid Grid.Row="2" Margin="20, 0, 0, 10">
+                    <ItemsControl x:Name="Itc_Topic_Bookmarks">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Grid.Row="0" Text="{Binding TopicName}" HorizontalAlignment="Left" FontSize="20" Margin="0, 0, 0, 10" VerticalAlignment="Center">
+                                    </TextBlock>
+                                    <ItemsControl Grid.Row="1" ItemsSource="{Binding Bookmarks}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid UIElement.PreviewMouseDown="Grd_BookmarkEntry_PreviewMouseDown">
+                                                    <Border BorderBrush="Gray" BorderThickness="1" Margin="5,0,10,5" VerticalAlignment="Top" CornerRadius="3">
+                                                        <Grid Margin="10,5,5,5">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="*"></RowDefinition>
+                                                                <RowDefinition Height="*"></RowDefinition>
+                                                                <RowDefinition Height="Auto"></RowDefinition>
+                                                            </Grid.RowDefinitions>
+                                                            <TextBlock Text="{Binding BookmarkedDate}" TextWrapping="Wrap" Grid.Row="0" FontStyle="Italic" FontSize="11" HorizontalAlignment="Right"></TextBlock>
+                                                            <TextBlock Text="{Binding LinkTitle}" Grid.Row="1" TextWrapping="Wrap" FontSize="12" FontWeight="Bold"></TextBlock>
+                                                            <TextBlock Text="{Binding Link}" Grid.Row="2" TextWrapping="Wrap" FontSize="11"></TextBlock>
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+        <Grid Background="Lavender" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0"></TextBlock>
+            <Grid Grid.Row="1" Margin="10, 20, 10, 10">
+                <TabControl TabStripPlacement="Top" x:Name="Tct_Bookmark_Tabs">
+                </TabControl>
+            </Grid>
+            <Grid Grid.Row="1" Margin="10, 20, 10, 10" Visibility="{Binding NoTabVisibility}" Background="Lavender">
+                <TextBlock Text="Please select atleast one bookmark link." FontSize="16" FontWeight="Bold" Margin="10"></TextBlock>
+            </Grid>
+
+        </Grid>
     </Grid>
 </UserControl>

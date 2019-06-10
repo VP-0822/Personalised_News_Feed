@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<AllUserBookmark xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <UserBookmarks>
+    <UserBookmark>
+      <UserId>1</UserId>
+      <TopicWiseBookmarks>
+        <TopicWiseBookmark>
+          <TopicName>Machine Learning</TopicName>
+          <Bookmarks>
+            <BookmarkItem>
+              <LinkTitle>Something</LinkTitle>
+              <Link>https://www.msn.com</Link>
+              <BookmarkedDate>2019-06-10T17:48:23.835436+02:00</BookmarkedDate>
+            </BookmarkItem>
+          </Bookmarks>
+        </TopicWiseBookmark>
+      </TopicWiseBookmarks>
+    </UserBookmark>
+  </UserBookmarks>
+</AllUserBookmark>
