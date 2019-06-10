@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace Personalised_News_Feed.Controls
     /// <summary>
     /// Interaction logic for History.xaml
     /// </summary>
-    public partial class History : UserControl
+    public partial class History : UserControl, INotifyPropertyChanged
     {
         public UserHistory userHistory { get; set; }
 
@@ -32,15 +33,61 @@ namespace Personalised_News_Feed.Controls
 
         public ObservableCollection<TopicHistory> restHistory { get; set; }
 
+        private string NoDataTodayVisibility_ { get; set; } = "Visible";
+
+        public string NoDataTodayVisibility
+        {
+            get { return NoDataTodayVisibility_; }
+            set
+            {
+                NoDataTodayVisibility_ = value;
+                OnPropertyChanged("NoDataTodayVisibility");
+            }
+        }
+
+        private string NoDataWeekVisibility_ { get; set; } = "Visible";
+        public string NoDataWeekVisibility
+        {
+            get { return NoDataWeekVisibility_; }
+            set
+            {
+                NoDataWeekVisibility_ = value;
+                OnPropertyChanged("NoDataWeekVisibility");
+            }
+        }
+
+        public string NoDataAllVisibility_ { get; set; } = "Visible";
+        public string NoDataAllVisibility
+        {
+            get { return NoDataAllVisibility_; }
+            set
+            {
+                NoDataAllVisibility_ = value;
+                OnPropertyChanged("NoDataAllVisibility");
+            }
+        }
+
+        public string NoTabVisibility_ { get; set; } = "Visible";
+        public string NoTabVisibility
+        {
+            get
+            {
+                return NoTabVisibility_;
+            }
+            set
+            {
+                NoTabVisibility_ = value;
+                OnPropertyChanged("NoTabVisibility");
+            }
+        }
+
         public History()
         {
             InitializeComponent();
             loadHistory();
-            filterHistoryByTime();
-
-            Itc_Today_History.ItemsSource = todayHistory;
-            Itc_Week_History.ItemsSource = weekHistory;
-            Itc_All_History.ItemsSource = restHistory;
+            filterHistoryByTime(userHistory.Histories);
+            bindItemsToUI();
+            this.DataContext = this;
         }
 
 
@@ -52,24 +99,111 @@ namespace Personalised_News_Feed.Controls
                 userHistory = (from n in allUserHistory.UsersHistory where n.UserId == 1 select n).ToList()[0];
             }
         }
-        private void filterHistoryByTime()
+        private void filterHistoryByTime(List<TopicHistory> histories)
         {
             DateTime todayDateTime = DateTime.Now;
             int todayWeekNumber = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(todayDateTime, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
             int todayDayNumber = CultureInfo.InvariantCulture.Calendar.GetDayOfYear(todayDateTime);
-            if (userHistory != null && userHistory.Histories != null)
+            if (histories != null)
             {
-                todayHistory = new ObservableCollection<TopicHistory>(from n in userHistory.Histories where CultureInfo.InvariantCulture.Calendar.GetDayOfYear(n.BrowsedDate) == todayDayNumber select n);
+                todayHistory = new ObservableCollection<TopicHistory>((from n in histories where CultureInfo.InvariantCulture.Calendar.GetDayOfYear(n.BrowsedDate) == todayDayNumber select n).OrderByDescending(x=> x.BrowsedDate));
 
-                weekHistory = new ObservableCollection<TopicHistory>(from n in userHistory.Histories where CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(n.BrowsedDate, CalendarWeekRule.FirstDay, DayOfWeek.Sunday) == todayWeekNumber select n);
+                weekHistory = new ObservableCollection<TopicHistory>((from n in histories where CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(n.BrowsedDate, CalendarWeekRule.FirstDay, DayOfWeek.Sunday) == todayWeekNumber && CultureInfo.InvariantCulture.Calendar.GetDayOfYear(n.BrowsedDate) != todayDayNumber select n).OrderByDescending(x => x.BrowsedDate));
 
-                restHistory = new ObservableCollection<TopicHistory>(from n in userHistory.Histories where CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(n.BrowsedDate, CalendarWeekRule.FirstDay, DayOfWeek.Sunday) != todayWeekNumber select n);
+                restHistory = new ObservableCollection<TopicHistory>((from n in histories where CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(n.BrowsedDate, CalendarWeekRule.FirstDay, DayOfWeek.Sunday) != todayWeekNumber select n).OrderByDescending(x => x.BrowsedDate));
             }
         }
 
         private void Tbx_filter_TextChanged(object sender, TextChangedEventArgs e)
         {
+            TextBox filterBox = (TextBox)sender;
+            string filterString = filterBox.Text;
 
+            if (string.IsNullOrEmpty(filterString))
+            {
+                filterHistoryByTime(userHistory.Histories);
+                bindItemsToUI();
+                return;
+            }
+
+            List<TopicHistory> filteredHistory = (from n in userHistory.Histories where n.TopicName.ToLower().Contains(filterString.ToLower()) select n).ToList();
+
+            filterHistoryByTime(filteredHistory);
+            bindItemsToUI();
         }
+
+        private void Grd_HistoryEntry_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            NoTabVisibility = "Hidden";
+            Grid selectedGrid = (Grid)sender;
+            TopicHistory selectedEntry = (TopicHistory)selectedGrid.DataContext;
+
+            string tabHeader = (selectedEntry.LinkTitle.Length > 20) ? selectedEntry.LinkTitle.Substring(0, 20) : selectedEntry.LinkTitle;
+            if (Tct_Topic_Tabs.Items != null)
+            {
+                int index = 0;
+                foreach (TabItem tabItem in Tct_Topic_Tabs.Items)
+                {
+                    if ((string)tabItem.Header == tabHeader)
+                    {
+                        Tct_Topic_Tabs.SelectedItem = tabItem;
+                        tabItem.IsSelected = true;
+                        Dispatcher.BeginInvoke((Action)(() => Tct_Topic_Tabs.SelectedIndex = index));
+                        return;
+                    }
+                    index++;
+                }
+            }
+            TabItem newTab = new TabItem { Header = tabHeader, DataContext = selectedEntry };
+            newTab.Content = new TabItemHistoryBrowserControl();
+
+            Tct_Topic_Tabs.Items.Add(newTab);
+            newTab.IsSelected = true;
+            Dispatcher.BeginInvoke((Action)(() => Tct_Topic_Tabs.SelectedIndex = (Tct_Topic_Tabs.Items.Count - 1)));
+        }
+
+        private void bindItemsToUI()
+        {
+            Itc_Today_History.ItemsSource = todayHistory;
+            Itc_Week_History.ItemsSource = weekHistory;
+            Itc_All_History.ItemsSource = restHistory;
+            if (todayHistory.Count > 0)
+            {
+                NoDataTodayVisibility = "Hidden";
+            }
+            else
+            {
+                NoDataTodayVisibility = "Visible";
+            }
+
+            if (weekHistory.Count > 0)
+            {
+                NoDataWeekVisibility = "Hidden";
+            }
+            else
+            {
+                NoDataWeekVisibility = "Visible";
+            }
+
+            if (restHistory.Count > 0)
+            {
+                NoDataAllVisibility = "Hidden";
+            }
+            else
+            {
+                NoDataAllVisibility = "Visible";
+            }
+        }
+
+        private void OnPropertyChanged(string v)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(v));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

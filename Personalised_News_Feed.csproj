@@ -82,6 +82,9 @@
     <Compile Include="Controls\TabItemBrowserControl.xaml.cs">
       <DependentUpon>TabItemBrowserControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\TabItemHistoryBrowserControl.xaml.cs">
+      <DependentUpon>TabItemHistoryBrowserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\Topics.xaml.cs">
       <DependentUpon>Topics.xaml</DependentUpon>
     </Compile>
@@ -108,6 +111,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\TabItemBrowserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TabItemHistoryBrowserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
