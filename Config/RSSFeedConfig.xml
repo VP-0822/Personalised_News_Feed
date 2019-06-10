@@ -25,4 +25,19 @@
     <name>IoT</name>
     <url>https://www.google.com/alerts/feeds/15651442089402079696/356594644306460719</url>
   </topic>
+  <topic>
+	<topicId>6</topicId>
+    <name>Java</name>
+    <url>https://www.google.com/alerts/feeds/15651442089402079696/356594644306460719</url>
+  </topic>
+  <topic>
+	<topicId>7</topicId>
+    <name>Genetics</name>
+    <url>https://www.google.com/alerts/feeds/15651442089402079696/356594644306460719</url>
+  </topic>
+  <topic>
+	<topicId>8</topicId>
+    <name>Manchester United</name>
+    <url>https://www.google.com/alerts/feeds/15651442089402079696/356594644306460719</url>
+  </topic>
 </rssFeed>

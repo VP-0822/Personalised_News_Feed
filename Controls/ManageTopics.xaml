@@ -5,8 +5,45 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Personalised_News_Feed.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" x:Name="UC_ManageTopic" Loaded="UserControl_Loaded">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" HorizontalAlignment="Left" FontSize="25" Margin="20, 20, 0, 10" VerticalAlignment="Center" Text="{Binding header}">
+        </TextBlock>
+        <Grid Grid.Row="1" Margin="20, 60, 0, 10" Width="350" HorizontalAlignment="Left">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="40"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Topic name" FontSize="16" VerticalAlignment="Center" Margin="10,0,10,0"></TextBlock>
+                <TextBox Grid.Column="1" FontSize="16" VerticalAlignment="Center" Width="200" Text="{Binding topicContext.topicDetails.name}" Height="25" x:Name="Tbx_Topic_Name"></TextBox>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="How often?" FontSize="16" VerticalAlignment="Center" Margin="10,0,10,0"></TextBlock>
+                <ComboBox x:Name="Cmb_How_Often" Grid.Column="1" FontSize="16" Width="200" VerticalAlignment="Center" SelectedValuePath="Content" Height="25" VerticalContentAlignment="Top" SelectedValue="{Binding topicContext.howOften}">
+                    <ComboBoxItem Content="Today"></ComboBoxItem>
+                    <ComboBoxItem Content="This week"></ComboBoxItem>
+                </ComboBox>
+            </Grid>
+            <CheckBox Grid.Row="2" x:Name="Chb_IsFavorite" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16" VerticalContentAlignment="Center" IsChecked="{Binding topicContext.isFavorite}">
+                <TextBlock Text="Add to favorite" Margin="10,0,0,0"></TextBlock>
+            </CheckBox>
+            <Button x:Name="Btn_Add_Button_Submit" Content="Add topic" Width="80" HorizontalAlignment="Right" Margin="0,0,0,0" FontSize="16" Grid.Row="3" Height="30" Visibility="{Binding showButton}" Click="Btn_Add_Button_Submit_Click"></Button>
+        </Grid>
     </Grid>
 </UserControl>

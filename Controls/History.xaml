@@ -7,6 +7,88 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <TextBlock Text="Work in progress...(History)" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" Background="Lavender">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="60"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="History" HorizontalAlignment="Left" FontSize="25" Margin="20, 20, 0, 10" VerticalAlignment="Center"></TextBlock>
+            <StackPanel Orientation="Vertical" Width="150" Grid.Row="1" Margin="20, 0, 0, 10">
+                <TextBlock Text="Filter for history:" HorizontalAlignment="Left" FontSize="13"/>
+                <TextBox Width="150" Grid.Column="0" Height="25" x:Name="Tbx_filter" TextChanged="Tbx_filter_TextChanged"/>
+            </StackPanel>
+            <Grid Grid.Row="2" Margin="20, 0, 0, 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="Today" HorizontalAlignment="Left" FontSize="20" Margin="0, 0, 0, 10" VerticalAlignment="Center">
+                </TextBlock>
+                <ItemsControl Grid.Row="1" x:Name="Itc_Today_History">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{Binding LinkTitle}" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock Text="{Binding TopicName, StringFormat='Topic name: {0}'}" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock Text="{Binding Link}" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock Text="{Binding BrowsedDate}" TextWrapping="Wrap"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+            <Grid Grid.Row="3" Margin="20, 0, 0, 10" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="This week" HorizontalAlignment="Left" FontSize="20" Margin="0, 0, 0, 10" VerticalAlignment="Center">
+                </TextBlock>
+                <ItemsControl Grid.Row="1" x:Name="Itc_Week_History">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="Gray" BorderThickness="1" Height="50" Margin="5,0,10,5" VerticalAlignment="Top">
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding LinkTitle}" TextWrapping="Wrap"></TextBlock>
+                                    <TextBlock Text="{Binding TopicName, StringFormat='Topic name: {0}'}" TextWrapping="Wrap"></TextBlock>
+                                    <TextBlock Text="{Binding Link}" TextWrapping="Wrap"></TextBlock>
+                                    <TextBlock Text="{Binding BrowsedDate}" TextWrapping="Wrap"></TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+            <Grid Grid.Row="4" Margin="20, 0, 0, 10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="Auto"></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="All" HorizontalAlignment="Left" FontSize="20" Margin="0, 0, 0, 10" VerticalAlignment="Center">
+                </TextBlock>
+                <ItemsControl Grid.Row="1" x:Name="Itc_All_History">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="{Binding LinkTitle}" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock Text="{Binding TopicName, StringFormat='Topic name: {0}'}" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock Text="{Binding Link}" TextWrapping="Wrap"></TextBlock>
+                                <TextBlock Text="{Binding BrowsedDate}" TextWrapping="Wrap"></TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+
+        </Grid>
+
+        <TextBlock Text="Work in progress...(History)" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1"/>
     </Grid>
 </UserControl>

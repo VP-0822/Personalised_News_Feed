@@ -5,22 +5,27 @@
     <topic>
       <topicId>1</topicId>
       <isFavorite>true</isFavorite>
+	  <howOften>Today</howOften>
     </topic>
     <topic>
       <topicId>2</topicId>
       <isFavorite>false</isFavorite>
+	  <howOften>Today</howOften>
     </topic>
 	<topic>
       <topicId>3</topicId>
       <isFavorite>true</isFavorite>
+	  <howOften>This week</howOften>
     </topic>
 	<topic>
       <topicId>4</topicId>
       <isFavorite>false</isFavorite>
+	  <howOften>Today</howOften>
     </topic>
 	<topic>
       <topicId>5</topicId>
       <isFavorite>false</isFavorite>
+	  <howOften>Today</howOften>
     </topic>
   </userTopic>
   <userTopic>
@@ -28,10 +33,12 @@
     <topic>
       <topicId>1</topicId>
       <isFavorite>false</isFavorite>
+	  <howOften>Today</howOften>
     </topic>
     <topic>
       <topicId>3</topicId>
       <isFavorite>true</isFavorite>
+	  <howOften>This week</howOften>
     </topic>
   </userTopic>
 </userSelection>

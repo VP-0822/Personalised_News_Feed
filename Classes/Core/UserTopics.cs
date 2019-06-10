@@ -31,6 +31,9 @@ namespace Personalised_News_Feed.Classes.Core
         [XmlElement("topicId")]
         public int topicId { get; set; }
 
+        [XmlElement("howOften")]
+        public string howOften { get; set; }
+
         [XmlElement("isFavorite")]
         public bool isFavorite
         {

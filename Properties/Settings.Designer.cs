@@ -34,5 +34,17 @@ namespace Personalised_News_Feed.Properties {
                 this["language"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int Next_Topic_Id {
+            get {
+                return ((int)(this["Next_Topic_Id"]));
+            }
+            set {
+                this["Next_Topic_Id"] = value;
+            }
+        }
     }
 }

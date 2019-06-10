@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Personalised_News_Feed.Classes.UI;
 using System.Threading;
-using Personalised_News_Feed.Delete;
 using System.ComponentModel;
 using Personalised_News_Feed.Controls;
 using System.Collections.ObjectModel;

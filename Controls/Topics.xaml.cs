@@ -28,7 +28,31 @@ namespace Personalised_News_Feed.Controls
     {
         public ObservableCollection<Topic> userFavoriteTopics;
         public ObservableCollection<Topic> userGeneralTopics;
-        private RSSFeedConfig rssFeedConfig;
+        public RSSFeedConfig rssFeedConfig;
+
+        private AllUserHistory allUserHistory;
+        private UserHistory userHistory { get; set; }
+
+        private UserTopics allUsers;
+        private UserTopic selectedUser;
+
+        public bool isManageTopics { get; set; } = false;
+
+        private UserControl _TopicUserControl;
+
+        public UserControl TopicUserControl
+        {
+            get
+            {
+                return _TopicUserControl;
+            }
+            set
+            {
+                _TopicUserControl = value;
+                OnPropertyChanged("TopicUserControl");
+            }
+        }
+
         public Topic selectedTopic {
             get { return selectedTopic_; }
             set
@@ -47,40 +71,78 @@ namespace Personalised_News_Feed.Controls
             ReadRSSConfig();
             ReadTopics();
             loadTopicData();
+            loadHistory();
             Lbx_FavoriteTopics.ItemsSource = userFavoriteTopics;
             Lbx_GeneralTopics.ItemsSource = userGeneralTopics;
             Lbx_FavoriteTopics.SelectedItem = userFavoriteTopics[0];
             selectedTopic = (Topic)Lbx_FavoriteTopics.SelectedItem;
-
+            //Cmb_How_Often.SelectedValue = "Today";
             this.DataContext = this;
+            if (isManageTopics)
+            {
+                //TopicUserControl = new ManageTopics(this, selectedTopic);
+                TopicUserControl = new ManageTopics();
+            }
+            else
+            {
+                TopicUserControl = new ViewTopic();
+            }
         }
 
         private void ReadRSSConfig()
         {
             rssFeedConfig = XMLSerializerWrapper.ReadXML<RSSFeedConfig>("config\\RSSFeedConfig.xml");
+
+            int highestTopicId = (from n in rssFeedConfig.topics select n).OrderByDescending(x => x.topicId).ToList()[0].topicId;
+            Properties.Settings.Default.Next_Topic_Id = highestTopicId + 1;
+            Properties.Settings.Default.Save();
         }
 
         private void ReadTopics()
         {
-            UserTopics allUsers = XMLSerializerWrapper.ReadXML<UserTopics>("data\\UserTopicSelection.xml");
-            UserTopic forUser1 = (from n in allUsers.topics where n.userId == 1 select n).ToList()[0];
+            allUsers = XMLSerializerWrapper.ReadXML<UserTopics>("Data\\UserTopicSelection.xml");
+            selectedUser = (from n in allUsers.topics where n.userId == 1 select n).ToList()[0];
 
-            userFavoriteTopics = new ObservableCollection<Topic>((from n in forUser1.topics where n.isFavorite == true select n));
-            userGeneralTopics = new ObservableCollection<Topic>((from n in forUser1.topics where n.isFavorite == false select n));
+            userFavoriteTopics = new ObservableCollection<Topic>((from n in selectedUser.topics where n.isFavorite == true select n));
+            userGeneralTopics = new ObservableCollection<Topic>((from n in selectedUser.topics where n.isFavorite == false select n));
+
+
         }
 
         private void loadTopicData()
         {
-            foreach(Topic eachTopic in userFavoriteTopics)
+            foreach (Topic eachTopic in userFavoriteTopics)
             {
                 eachTopic.topicDetails = (from n in rssFeedConfig.topics where n.topicId == eachTopic.topicId select n).ToList()[0];
-                eachTopic.topicFeed = XMLSerializerWrapper.ReadXML<TopicFeed>("data\\TopicId" + eachTopic.topicId+".xml");
+                eachTopic.topicFeed = XMLSerializerWrapper.ReadXML<TopicFeed>("Data\\TopicId" + eachTopic.topicId + ".xml");
             }
 
             foreach (Topic eachTopic in userGeneralTopics)
             {
                 eachTopic.topicDetails = (from n in rssFeedConfig.topics where n.topicId == eachTopic.topicId select n).ToList()[0];
-                eachTopic.topicFeed = XMLSerializerWrapper.ReadXML<TopicFeed>("data\\TopicId" + eachTopic.topicId+".xml");
+                eachTopic.topicFeed = XMLSerializerWrapper.ReadXML<TopicFeed>("Data\\TopicId" + eachTopic.topicId + ".xml");
+            }
+        }
+
+        private void loadHistory()
+        {
+            //AllUserHistory ah = new AllUserHistory();
+            //List<UserHistory> asd = new List<UserHistory>();
+            //ah.UsersHistory = asd;
+            //UserHistory uh = new UserHistory();
+            //TopicHistory th = new TopicHistory();
+            //th.TopicName = "asdad";
+            //th.LinkTitle = "asdad asd";
+            //th.Link = "www.google.com";
+            //th.BrowsedDate = DateTime.Now;
+            //uh.UserId = 1;
+            //uh.Histories = new List<TopicHistory>() { th };
+            //asd.Add(uh);
+            //XMLSerializerWrapper.WriteXML<AllUserHistory>(ah, "Data\\UserHistory.xml");
+            allUserHistory = XMLSerializerWrapper.ReadXML<AllUserHistory>("Data\\userHistory.xml");
+            if (allUserHistory != null)
+            {
+                userHistory = (from n in allUserHistory.UsersHistory where n.UserId == 1 select n).ToList()[0];
             }
         }
 
@@ -97,7 +159,15 @@ namespace Personalised_News_Feed.Controls
             }
 
             selectedTopic = (Topic)Lbx_FavoriteTopics.SelectedItem;
-
+            if (isManageTopics)
+            {
+                //TopicUserControl = new ManageTopics(this, selectedTopic);
+                TopicUserControl = new ManageTopics();
+            }
+            else
+            {
+                TopicUserControl = new ViewTopic();
+            }
         }
 
         private void Lbx_GeneralTopics_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -113,6 +183,15 @@ namespace Personalised_News_Feed.Controls
             }
 
             selectedTopic = (Topic)Lbx_GeneralTopics.SelectedItem;
+            if (isManageTopics)
+            {
+                //TopicUserControl = new ManageTopics(this, selectedTopic);
+                TopicUserControl = new ManageTopics();
+            }
+            else
+            {
+                TopicUserControl = new ViewTopic();
+            }
         }
 
         //private void WriteContent()
@@ -146,40 +225,36 @@ namespace Personalised_News_Feed.Controls
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private void Grd_FeedEntry_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        public void AddNewTopic(Topic newTopic, string newTopicName)
         {
-            Grid selectedGrid = (Grid)sender;
-            Entry selectedEntry = (Entry)selectedGrid.DataContext;
-
-            string tabHeader = selectedEntry.title.Substring(0,20);
-            TabItem newTab = new TabItem { Header = tabHeader, DataContext = selectedEntry };
-            newTab.Content = new TabItemBrowserControl();
-            //Tct_Topic_Tabs.Items.Add(new TabItem { Header= "Hello"});
-
-            Tct_Topic_Tabs.Items.Add(newTab);
-            Tct_Topic_Tabs.SelectedItem = newTab;
-        }
-
-        private void Img_Add_To_Favorites_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-            if(selectedTopic.isFavorite)
+            List<RSSTopic> newTopics = (from n in rssFeedConfig.topics where n.name == newTopicName select n).ToList();
+            if (newTopics != null && newTopics.Count > 0)
             {
-                userFavoriteTopics.Remove(selectedTopic);
-                userGeneralTopics.Add(selectedTopic);
-                selectedTopic.isFavorite = !selectedTopic.isFavorite;
+                RSSTopic newTopicDetails = newTopics[0];
+                newTopic.topicId = newTopicDetails.topicId;
+                newTopic.topicDetails = newTopicDetails;
+                newTopic.topicFeed = XMLSerializerWrapper.ReadXML<TopicFeed>("Data\\TopicId" + newTopic.topicId + ".xml");
+            }
+
+            if (newTopic.isFavorite == true)
+            {
+                userFavoriteTopics.Add(newTopic);
             }
             else
             {
-                userGeneralTopics.Remove(selectedTopic);
-                userFavoriteTopics.Add(selectedTopic);
-                selectedTopic.isFavorite = !selectedTopic.isFavorite;
+                userGeneralTopics.Add(newTopic);
             }
+            selectedTopic = newTopic;
+            TopicUserControl = new ManageTopics();
+            writeToFile();
         }
 
         private void Btn_Add_Topic_Click(object sender, RoutedEventArgs e)
         {
-
-
+            isManageTopics = true;
+            //TopicUserControl = new ManageTopics(this, null);
+            selectedTopic = null;
+            TopicUserControl = new ManageTopics();
         }
 
         private void Tbx_filter_TextChanged(object sender, TextChangedEventArgs e)
@@ -229,6 +304,64 @@ namespace Personalised_News_Feed.Controls
                 removedTopics.Add(selectedTopicForRemove);
                 return;
             }
+
+        }
+
+        private void Btn_Manage_Item_Click(object sender, RoutedEventArgs e)
+        {
+            isManageTopics = true;
+            Button removeTopic = (Button)sender;
+            int selectedTopicId = (int)removeTopic.Tag;
+            List<Topic> selectedTopicsForManage = (List<Topic>)(from n in userFavoriteTopics where n.topicId == selectedTopicId select n).ToList();
+            Topic selectedTopicForManage = null;
+            if (selectedTopicsForManage != null && selectedTopicsForManage.Count > 0)
+            {
+                selectedTopicForManage = selectedTopicsForManage[0];
+            }
+            if (selectedTopicForManage != null)
+            {
+                Lbx_FavoriteTopics.SelectedItem = selectedTopicForManage;
+                return;
+            }
+
+            selectedTopicsForManage = (List<Topic>)(from n in userGeneralTopics where n.topicId == selectedTopicId select n).ToList();
+
+            if (selectedTopicsForManage != null && selectedTopicsForManage.Count > 0)
+            {
+                selectedTopicForManage = selectedTopicsForManage[0];
+            }
+            if (selectedTopicForManage != null)
+            {
+                Lbx_GeneralTopics.SelectedItem = selectedTopicForManage;
+                return;
+            }
+        }
+
+        private void writeToFile()
+        {
+            List<Topic> collectionToWrite = new List<Topic>();
+            collectionToWrite.AddRange(userFavoriteTopics);
+            collectionToWrite.AddRange(userGeneralTopics);
+
+            selectedUser.topics = collectionToWrite;
+
+            XMLSerializerWrapper.WriteXML<UserTopics>(allUsers, "Data\\UserTopicSelection.xml");
+        }
+
+        public void writeHistoryToFile(Entry selectedEntry)
+        {
+            TopicHistory history = new TopicHistory();
+            history.TopicName = selectedTopic.topicDetails.name;
+            history.LinkTitle = selectedEntry.title;
+            history.Link = selectedEntry.link.href;
+            history.BrowsedDate = DateTime.Now;
+
+            userHistory.Histories.Add(history);
+
+            List<TopicHistory> sortedHistory = (from n in userHistory.Histories select n).OrderByDescending(x => x.BrowsedDate).ToList();
+            userHistory.Histories = sortedHistory;
+
+            XMLSerializerWrapper.WriteXML<AllUserHistory>(allUserHistory, "Data\\UserHistory.xml");
 
         }
     }
