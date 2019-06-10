@@ -85,7 +85,7 @@ namespace Personalised_News_Feed
                 cultureItems.Add(item);
             }
 
-            Cmb_Languages.ItemsSource = cultureItems;
+            //Cmb_Languages.ItemsSource = cultureItems;
             //Cmb_Languages.SelectedItem = cultureItems[0];
         }
 

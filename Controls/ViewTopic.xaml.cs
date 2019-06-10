@@ -81,7 +81,7 @@ namespace Personalised_News_Feed.Controls
 
             Tct_Topic_Tabs.Items.Add(newTab);
             newTab.IsSelected = true;
-            //topics.writeHistoryToFile(selectedEntry);
+            topics.writeHistoryToFile(selectedEntry);
             Dispatcher.BeginInvoke((Action)(() => Tct_Topic_Tabs.SelectedIndex = (Tct_Topic_Tabs.Items.Count - 1)));
         }
 

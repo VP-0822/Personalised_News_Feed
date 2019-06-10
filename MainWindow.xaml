@@ -17,18 +17,12 @@
         <!-- Main background for side panel-->
         <Grid Grid.Column="0" Background="AntiqueWhite" Margin="5,0,0,0">
             <Grid.RowDefinitions >
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="70"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <ComboBox Grid.Row="0" Name="Cmb_Languages" Height="20" Width="80" VerticalAlignment="Bottom" Margin="0,0,0,10" SelectionChanged="Cmb_Languages_SelectionChanged">
-                
-            </ComboBox>
-            <TextBlock Grid.Row="1" Text="Profile"/>
-            <!--<controls:SideBarItemControl Grid.Row="1" x:Name="Sbic_topics" VerticalAlignment="Top" Title="{x:Static resX:Resources.txt_sidebar_topics}" IsActive="True" IconPath="&#xf086;" MouseUp="Sbic_topics_MouseUp"/>
-            <controls:SideBarItemControl Grid.Row="2" x:Name="Sbic_history" VerticalAlignment="Top" Title="Activities" IsActive="False" IconPath="&#xf086;" MouseUp="Sbic_history_MouseUp"/>
-            <controls:SideBarItemControl Grid.Row="3" x:Name="Sbic_bookmarks" VerticalAlignment="Top" Title="Bookmarks" IsActive="False" IconPath="&#xf086;"/>-->
-            <StackPanel Orientation="Vertical" Grid.Row="2" >
+            <!--<ComboBox Grid.Row="0" Name="Cmb_Languages" Height="20" Width="80" VerticalAlignment="Bottom" Margin="0,0,0,10" SelectionChanged="Cmb_Languages_SelectionChanged">
+
+            </ComboBox>-->
+            <StackPanel Orientation="Vertical" Grid.Row="0">
                 <ItemsControl x:Name="Itc_Side_Items">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>

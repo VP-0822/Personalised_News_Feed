@@ -65,16 +65,16 @@
     <Compile Include="Classes\Core\UserHistory.cs" />
     <Compile Include="Classes\Core\UserTopics.cs" />
     <Compile Include="Classes\UI\SideBarItem.cs" />
-    <Compile Include="Controls\Bookmarks.xaml.cs">
+    <Compile Include="Controls\Bookmarks\Bookmarks.xaml.cs">
       <DependentUpon>Bookmarks.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\BookmarkTabHeaderControl.xaml.cs">
+    <Compile Include="Controls\Bookmarks\BookmarkTabHeaderControl.xaml.cs">
       <DependentUpon>BookmarkTabHeaderControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\History.xaml.cs">
+    <Compile Include="Controls\History\History.xaml.cs">
       <DependentUpon>History.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\HistoryTabHeaderControl.xaml.cs">
+    <Compile Include="Controls\History\HistoryTabHeaderControl.xaml.cs">
       <DependentUpon>HistoryTabHeaderControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ManageTopics.xaml.cs">
@@ -89,13 +89,13 @@
     <Compile Include="Controls\TabHeaderControl.xaml.cs">
       <DependentUpon>TabHeaderControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TabItemBookmarkBrowserControl.xaml.cs">
+    <Compile Include="Controls\Bookmarks\TabItemBookmarkBrowserControl.xaml.cs">
       <DependentUpon>TabItemBookmarkBrowserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TabItemBrowserControl.xaml.cs">
       <DependentUpon>TabItemBrowserControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TabItemHistoryBrowserControl.xaml.cs">
+    <Compile Include="Controls\History\TabItemHistoryBrowserControl.xaml.cs">
       <DependentUpon>TabItemHistoryBrowserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Topics.xaml.cs">
@@ -107,19 +107,19 @@
     <Compile Include="WelcomePage.xaml.cs">
       <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
-    <Page Include="Controls\Bookmarks.xaml">
+    <Page Include="Controls\Bookmarks\Bookmarks.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\BookmarkTabHeaderControl.xaml">
+    <Page Include="Controls\Bookmarks\BookmarkTabHeaderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\History.xaml">
+    <Page Include="Controls\History\History.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\HistoryTabHeaderControl.xaml">
+    <Page Include="Controls\History\HistoryTabHeaderControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -135,7 +135,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\TabItemBookmarkBrowserControl.xaml">
+    <Page Include="Controls\Bookmarks\TabItemBookmarkBrowserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,7 +143,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\TabItemHistoryBrowserControl.xaml">
+    <Page Include="Controls\History\TabItemHistoryBrowserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -229,6 +229,13 @@
     <Resource Include="Resources\Images\Icons\history_blue_t.png" />
     <Resource Include="Resources\Images\Icons\profile_blue.png" />
     <Resource Include="Resources\Images\Icons\topics.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Data\TopicId6.xml" />
+    <Resource Include="Data\TopicId7.xml" />
+    <Resource Include="Data\TopicId8.xml" />
+    <Resource Include="Data\UserBookmarks.xml" />
+    <Resource Include="Data\UserHistory.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
