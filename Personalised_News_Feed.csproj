@@ -208,28 +208,20 @@
     <Resource Include="Data\TopicId5.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Icons\bookmark.png" />
-    <Resource Include="Resources\Images\Icons\bookmarkT.png" />
-    <Resource Include="Resources\Images\Icons\bookmark_blue.png" />
-    <Resource Include="Resources\Images\Icons\bookmark_blue_t.png" />
-    <Resource Include="Resources\Images\Icons\bookmark_done.png" />
-    <Resource Include="Resources\Images\Icons\bookmark_undone.png" />
-    <Resource Include="Resources\Images\Icons\documentT.png" />
-    <Resource Include="Resources\Images\Icons\document_blue.png" />
-    <Resource Include="Resources\Images\Icons\document_blue_t.png" />
-    <Resource Include="Resources\Images\Icons\history.png" />
-    <Resource Include="Resources\Images\Icons\historyT.png" />
-    <Resource Include="Resources\Images\Icons\history_blue.png" />
-    <Resource Include="Resources\Images\Icons\history_blue_t.png" />
-    <Resource Include="Resources\Images\Icons\profile_blue.png" />
-    <Resource Include="Resources\Images\Icons\topics.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Data\TopicId6.xml" />
     <Resource Include="Data\TopicId7.xml" />
     <Resource Include="Data\TopicId8.xml" />
     <Resource Include="Data\UserBookmarks.xml" />
     <Resource Include="Data\UserHistory.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\bookmarkW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\historyW.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Icons\documentW.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

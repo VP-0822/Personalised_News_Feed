@@ -58,9 +58,9 @@ namespace Personalised_News_Feed
             InitializeComponent();
 
             sideBarItems = new ObservableCollection<SideBarItem>();
-            SideBarItem topics = new SideBarItem { ItemId = "1", ItemTitle = "Topics", IsActive = "Visible", IconPath = @"\Resources\Images\Icons\document_blue_t.png" };
-            SideBarItem history = new SideBarItem { ItemId = "2", ItemTitle = "History", IsActive = "Hidden", IconPath = @"\Resources\Images\Icons\history_blue_t.png" };
-            SideBarItem bookmarks = new SideBarItem { ItemId = "3", ItemTitle = "Bookmarks", IsActive = "Hidden", IconPath = @"\Resources\Images\Icons\bookmark_blue_t.png" };
+            SideBarItem topics = new SideBarItem { ItemId = "1", ItemTitle = "Topics", IsActive = "Visible", IconPath = @"\Resources\Images\Icons\documentW.png" };
+            SideBarItem history = new SideBarItem { ItemId = "2", ItemTitle = "History", IsActive = "Hidden", IconPath = @"\Resources\Images\Icons\historyW.png" };
+            SideBarItem bookmarks = new SideBarItem { ItemId = "3", ItemTitle = "Bookmarks", IsActive = "Hidden", IconPath = @"\Resources\Images\Icons\bookmarkW.png" };
 
             sideBarItems.Add(topics);
             sideBarItems.Add(history);
