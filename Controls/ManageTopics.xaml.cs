@@ -161,8 +161,10 @@ namespace Personalised_News_Feed.Controls
         }
 
         private void Chb_IsFavorite_Checked(object sender, RoutedEventArgs e)
-        {
-            topicUserControl.AddNewTopic(topicContext, Tbx_Topic_Name.Text);
+        {   if(topicUserControl.selectedTopic != null)
+            {
+                topicUserControl.AddNewTopic(topicContext, Tbx_Topic_Name.Text);
+            }
         }
 
         private void Cmb_How_Often_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -461,14 +461,37 @@ namespace Personalised_News_Feed.Controls
             bookmarkItem.Link = selectedEntry.link.href;
             bookmarkItem.LinkTitle = selectedEntry.title;
 
+            bool isAdded = false;
             foreach (TopicWiseBookmark twBookmark in userBookmark.TopicWiseBookmarks)
             {
                 if (twBookmark.TopicName.ToLower().Equals(selectedTopic.topicDetails.name.ToLower()))
                 {
-                    twBookmark.Bookmarks.Add(bookmarkItem);
-                    List<BookmarkItem> filteredBookmarkItems = (from n in twBookmark.Bookmarks select n).OrderByDescending(x => x.BookmarkedDate).ToList();
-                    twBookmark.Bookmarks = filteredBookmarkItems;
+                    bool isEntryPresent = false;
+                    foreach(BookmarkItem bi in twBookmark.Bookmarks)
+                    {
+                        if(bi.Link.Equals(selectedEntry.link.href))
+                        {
+                            isEntryPresent = true;
+                            break;
+                        }
+                    }
+                    isAdded = true;
+                    if(isEntryPresent == false)
+                    {
+                        twBookmark.Bookmarks.Add(bookmarkItem);
+                        List<BookmarkItem> filteredBookmarkItems = (from n in twBookmark.Bookmarks select n).OrderByDescending(x => x.BookmarkedDate).ToList();
+                        twBookmark.Bookmarks = filteredBookmarkItems;
+                    }
                 }
+            }
+
+            if(isAdded == false)
+            {
+                TopicWiseBookmark newTWB = new TopicWiseBookmark();
+                newTWB.TopicName = selectedTopic.topicDetails.name;
+                newTWB.Bookmarks = new List<BookmarkItem>();
+                newTWB.Bookmarks.Add(bookmarkItem);
+                userBookmark.TopicWiseBookmarks.Add(newTWB);
             }
 
             XMLSerializerWrapper.WriteXML<AllUserBookmark>(allUserBookmark, "Data\\UserBookmarks.xml");
