@@ -31,7 +31,7 @@ namespace Personalised_News_Feed
     {
         private UserControl _DisplayUserControl;
         public ObservableCollection<SideBarItem> sideBarItems;
-        public List<string> cultures = new List<string> { "en english", "ar arabic" };
+        public List<string> cultures = new List<string> { "en english", "de deutsche" };
         //Use GetAvailableCultures()
 
         public UserControl DisplayUserControl

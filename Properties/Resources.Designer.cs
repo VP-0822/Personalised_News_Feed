@@ -70,20 +70,29 @@ namespace Personalised_News_Feed.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Topics 1.
+        ///   Looks up a localized string similar to a place for your personalised news feed.
         /// </summary>
-        public static string txt_sidebar_topics {
+        public static string txt_app_subtitle {
             get {
-                return ResourceManager.GetString("txt_sidebar_topics", resourceCulture);
+                return ResourceManager.GetString("txt_app_subtitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Personalised news feed.
+        ///   Looks up a localized string similar to myfeed.
         /// </summary>
-        public static string win_appName {
+        public static string txt_app_title {
             get {
-                return ResourceManager.GetString("win_appName", resourceCulture);
+                return ResourceManager.GetString("txt_app_title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select language.
+        /// </summary>
+        public static string txt_select_language {
+            get {
+                return ResourceManager.GetString("txt_select_language", resourceCulture);
             }
         }
     }

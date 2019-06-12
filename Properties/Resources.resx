@@ -120,10 +120,13 @@
   <data name="flowDirection" xml:space="preserve">
     <value>LeftToRight</value>
   </data>
-  <data name="txt_sidebar_topics" xml:space="preserve">
-    <value>Topics 1</value>
+  <data name="txt_app_subtitle" xml:space="preserve">
+    <value>a place for your personalised news feed</value>
   </data>
-  <data name="win_appName" xml:space="preserve">
-    <value>Personalised news feed</value>
+  <data name="txt_app_title" xml:space="preserve">
+    <value>myfeed</value>
+  </data>
+  <data name="txt_select_language" xml:space="preserve">
+    <value>Select language</value>
   </data>
 </root>
