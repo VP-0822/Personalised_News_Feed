@@ -38,7 +38,7 @@
                                 <RowDefinition Height="60"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <ComboBox Width="100" HorizontalAlignment="Right" Margin="0,0,20,0" Height="25" FontWeight="Normal" FontSize="14" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding selectedTopic.howOften}">
+                            <ComboBox Width="100" HorizontalAlignment="Right" Margin="0,0,20,0" Height="25" FontWeight="Normal" FontSize="14" Grid.Row="0" SelectedValuePath="Content" SelectedValue="{Binding selectedTopic.howOften}" SelectionChanged="Cmb_HowOften_Selected" x:Name="Cmb_HowOften">
                                 <ComboBoxItem>Today</ComboBoxItem>
                                 <ComboBoxItem>This week</ComboBoxItem>
                             </ComboBox>

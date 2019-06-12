@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,8 @@ namespace Personalised_News_Feed.Controls
         private Topics topics;
 
         public Entry globalSelectedEntry { get; set; }
+
+        public bool isDropDownChanged = false;
 
         public string tagHeader
         {
@@ -89,6 +92,41 @@ namespace Personalised_News_Feed.Controls
         private void UC_ViewTopic_Loaded(object sender, RoutedEventArgs e)
         {
             topics = (Topics)((UserControl)sender).DataContext;
+        }
+
+        private void Cmb_HowOften_Selected(object sender, RoutedEventArgs e)
+        {
+            Topics topicsUC = (Topics)((ComboBox)sender).DataContext;
+            if(topicsUC.selectedTopic == null)
+            {
+                return;
+            }
+
+            string howOften = topicsUC.selectedTopic.howOften;
+            DateTime todayDateTime = DateTime.Now;
+            int todayWeekNumber = CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(todayDateTime, CalendarWeekRule.FirstDay, DayOfWeek.Sunday);
+            int todayDayNumber = CultureInfo.InvariantCulture.Calendar.GetDayOfYear(todayDateTime);
+
+            List<Entry> filteredEntities = new List<Entry>();
+            if (howOften == "This week")
+            {
+                filteredEntities = (from n in topicsUC.selectedTopic.topicFeed.entities where CultureInfo.InvariantCulture.Calendar.GetWeekOfYear(n.updatedOnDatetime, CalendarWeekRule.FirstDay, DayOfWeek.Sunday) == todayWeekNumber select n).ToList();
+                Itc_Feed_Entries.ItemsSource = filteredEntities;
+            }
+            //else
+            //{
+            //    filteredEntities = (from n in topicsUC.selectedTopic.topicFeed.entities where CultureInfo.InvariantCulture.Calendar.GetDayOfYear(n.updatedOnDatetime) == todayDayNumber select n).ToList();
+            //}
+            
+        }
+
+        private void Cmb_HowOften_Selected(object sender, SelectionChangedEventArgs e)
+        {
+            if(isDropDownChanged && topics != null)
+            {
+                topics.AddNewTopic(topics.selectedTopic, topics.selectedTopic.topicDetails.name);
+            }
+            isDropDownChanged = true;
         }
     }
 }

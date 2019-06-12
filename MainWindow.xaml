@@ -26,7 +26,7 @@
                 <ComboBox Name="Cmb_Languages" Height="20" Width="100" VerticalAlignment="Center" SelectionChanged="Cmb_Languages_SelectionChanged"></ComboBox>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="1" VerticalAlignment="Center">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -40,7 +40,7 @@
                 <!--<ComboBox Grid.Row="0" Name="Cmb_Languages" Height="20" Width="80" VerticalAlignment="Bottom" Margin="0,0,0,10" SelectionChanged="Cmb_Languages_SelectionChanged">
 
             </ComboBox>-->
-                <StackPanel Orientation="Vertical" Grid.Row="0">
+                <StackPanel Orientation="Vertical" Grid.Row="0" Margin="0,15,0,0">
                     <ItemsControl x:Name="Itc_Side_Items">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>

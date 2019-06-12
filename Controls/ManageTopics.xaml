@@ -41,12 +41,12 @@
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Update every?" FontSize="16" VerticalAlignment="Center" Margin="10,0,10,0"></TextBlock>
-                <ComboBox x:Name="Cmb_How_Often" Grid.Column="1" FontSize="14" Width="200" VerticalAlignment="Center" SelectedValuePath="Content" Height="25" VerticalContentAlignment="Top" SelectedValue="{Binding topicContext.howOften}">
+                <ComboBox x:Name="Cmb_How_Often" Grid.Column="1" FontSize="14" Width="200" VerticalAlignment="Center" SelectedValuePath="Content" Height="25" VerticalContentAlignment="Top" SelectedValue="{Binding topicContext.howOften}" SelectionChanged="Cmb_How_Often_SelectionChanged">
                     <ComboBoxItem Content="Day"></ComboBoxItem>
                     <ComboBoxItem Content="Week"></ComboBoxItem>
                 </ComboBox>
             </Grid>
-            <CheckBox Grid.Row="2" x:Name="Chb_IsFavorite" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16" VerticalContentAlignment="Center" IsChecked="{Binding topicContext.isFavorite}">
+            <CheckBox Grid.Row="2" x:Name="Chb_IsFavorite" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16" VerticalContentAlignment="Center" IsChecked="{Binding topicContext.isFavorite}" Checked="Chb_IsFavorite_Checked" Unchecked="Chb_IsFavorite_Checked">
                 <TextBlock Text="Add to favorite" Margin="10,0,0,0"></TextBlock>
             </CheckBox>
             <Button x:Name="Btn_Add_Button_Submit" Content="Add topic" Width="80" HorizontalAlignment="Right" Margin="0,0,0,0" FontSize="16" Grid.Row="3" Height="30" Visibility="{Binding showButton}" Click="Btn_Add_Button_Submit_Click" Style="{StaticResource RoundButtonTemplate}"></Button>

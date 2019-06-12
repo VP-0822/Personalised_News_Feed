@@ -28,6 +28,8 @@ namespace Personalised_News_Feed.Controls
 
         public string showButton { get; set; } = "Visible";
 
+        private bool isDropdownChanged = false;
+
         private string _header { get; set; } = "Add topic"; 
 
         public string header
@@ -84,7 +86,7 @@ namespace Personalised_News_Feed.Controls
                 Tbx_Topic_Name.IsEnabled = false;
                 header = "Manage topic";
                 showButton = "Hidden";
-                if(topicContext.howOften.Equals("Today"))
+                if (topicContext.howOften.Equals("Today"))
                 {
                     Cmb_How_Often.SelectedValue = "Day";
                 }
@@ -142,6 +144,29 @@ namespace Personalised_News_Feed.Controls
             topicUserControl.TopicUserControl = new ViewTopic() { DataContext = topicUserControl.DataContext};
             topicUserControl.isManageTopics = false;
             topicUserControl.selectedTopic = ((Topics)topicUserControl.DataContext).userFavoriteTopics[0];
+            ((Topics)topicUserControl.DataContext).Lbx_FavoriteTopics.SelectedItem = topicUserControl.selectedTopic;
+        }
+
+        private void Chb_IsFavorite_Checked(object sender, RoutedEventArgs e)
+        {
+            topicUserControl.AddNewTopic(topicContext, Tbx_Topic_Name.Text);
+        }
+
+        private void Cmb_How_Often_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (isDropdownChanged && topicContext != null)
+            {
+                if (((string)Cmb_How_Often.SelectedValue).Equals("Day"))
+                {
+                    topicContext.howOften = "Today";
+                }
+                else
+                {
+                    topicContext.howOften = "This week";
+                }
+                topicUserControl.AddNewTopic(topicContext, Tbx_Topic_Name.Text);
+            }
+            isDropdownChanged = true;
         }
     }
 }

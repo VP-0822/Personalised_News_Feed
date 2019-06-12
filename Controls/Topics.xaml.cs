@@ -56,7 +56,8 @@ namespace Personalised_News_Feed.Controls
             }
         }
 
-        public Topic selectedTopic {
+        public Topic selectedTopic
+        {
             get { return selectedTopic_; }
             set
             {
@@ -67,6 +68,31 @@ namespace Personalised_News_Feed.Controls
         private Topic selectedTopic_;
 
         public ObservableCollection<Topic> removedTopics = new ObservableCollection<Topic>();
+
+        private bool IsNoDataGeneralVisible_ { get; set; }
+
+        private bool IsNoDataFavVisible_ { get; set; }
+
+        public bool IsNoDataGeneralVisible
+        {
+            get { return IsNoDataGeneralVisible_; }
+            set
+            {
+                IsNoDataGeneralVisible_ = value;
+                OnPropertyChanged("IsNoDataGeneralVisible");
+            }
+        }
+
+        public bool IsNoDataFavVisible
+        {
+            get { return IsNoDataFavVisible_; }
+            set
+            {
+                IsNoDataFavVisible_ = value;
+                OnPropertyChanged("IsNoDataFavVisible");
+            }
+        }
+
         public Topics()
         {
             InitializeComponent();
@@ -85,7 +111,7 @@ namespace Personalised_News_Feed.Controls
             if (isManageTopics)
             {
                 //TopicUserControl = new ManageTopics(this, selectedTopic);
-                TopicUserControl = new ManageTopics() { DataContext = this};
+                TopicUserControl = new ManageTopics() { DataContext = this };
             }
             else
             {
@@ -119,6 +145,7 @@ namespace Personalised_News_Feed.Controls
             {
                 eachTopic.topicDetails = (from n in rssFeedConfig.topics where n.topicId == eachTopic.topicId select n).ToList()[0];
                 eachTopic.topicFeed = XMLSerializerWrapper.ReadXML<TopicFeed>("Data\\TopicId" + eachTopic.topicId + ".xml");
+
             }
 
             foreach (Topic eachTopic in userGeneralTopics)
@@ -140,7 +167,7 @@ namespace Personalised_News_Feed.Controls
         private void loadBookmarks()
         {
             allUserBookmark = XMLSerializerWrapper.ReadXML<AllUserBookmark>("Data\\UserBookmarks.xml");
-            if(allUserBookmark != null)
+            if (allUserBookmark != null)
             {
                 userBookmark = (from n in allUserBookmark.UserBookmarks where n.UserId == 1 select n).ToList()[0];
             }
@@ -227,25 +254,48 @@ namespace Personalised_News_Feed.Controls
 
         public void AddNewTopic(Topic newTopic, string newTopicName)
         {
-            List<RSSTopic> newTopics = (from n in rssFeedConfig.topics where n.name == newTopicName select n).ToList();
-            if (newTopics != null && newTopics.Count > 0)
+            if (newTopic.topicFeed == null)
             {
-                RSSTopic newTopicDetails = newTopics[0];
-                newTopic.topicId = newTopicDetails.topicId;
-                newTopic.topicDetails = newTopicDetails;
-                newTopic.topicFeed = XMLSerializerWrapper.ReadXML<TopicFeed>("Data\\TopicId" + newTopic.topicId + ".xml");
-            }
-
-            if (newTopic.isFavorite == true)
-            {
-                userFavoriteTopics.Add(newTopic);
+                List<RSSTopic> newTopics = (from n in rssFeedConfig.topics where n.name == newTopicName select n).ToList();
+                if (newTopics != null && newTopics.Count > 0)
+                {
+                    RSSTopic newTopicDetails = newTopics[0];
+                    newTopic.topicId = newTopicDetails.topicId;
+                    newTopic.topicDetails = newTopicDetails;
+                    newTopic.topicFeed = XMLSerializerWrapper.ReadXML<TopicFeed>("Data\\TopicId" + newTopic.topicId + ".xml");
+                    if (newTopic.isFavorite == true)
+                    {
+                        userFavoriteTopics.Add(newTopic);
+                    }
+                    else
+                    {
+                        userGeneralTopics.Add(newTopic);
+                    }
+                    selectedTopic = newTopic;
+                    TopicUserControl = new ManageTopics() { DataContext = this };
+                }
             }
             else
             {
-                userGeneralTopics.Add(newTopic);
+                if(newTopic.isFavorite == true)
+                {
+                    if(!userFavoriteTopics.Contains(newTopic))
+                    {
+                        userFavoriteTopics.Add(newTopic);
+                        userGeneralTopics.Remove(newTopic);
+                    }
+                }
+                else
+                {
+                    if(!userGeneralTopics.Contains(newTopic))
+                    {
+                        userGeneralTopics.Add(newTopic);
+                        userFavoriteTopics.Remove(newTopic);
+                    }
+                }
             }
-            selectedTopic = newTopic;
-            TopicUserControl = new ManageTopics() { DataContext = this };
+
+            
             writeToFile();
         }
 
@@ -264,15 +314,47 @@ namespace Personalised_News_Feed.Controls
             if (string.IsNullOrEmpty(query))
             {
                 Lbx_FavoriteTopics.ItemsSource = userFavoriteTopics;
+                if (userFavoriteTopics == null || (userFavoriteTopics.Count == 0))
+                {
+                    IsNoDataFavVisible = true;
+                }
+                else
+                {
+                    IsNoDataFavVisible = false;
+                }
                 Lbx_GeneralTopics.ItemsSource = userGeneralTopics;
+                if (userGeneralTopics == null || (userGeneralTopics.Count == 0))
+                {
+                    IsNoDataGeneralVisible = true;
+                }
+                else
+                {
+                    IsNoDataGeneralVisible = false;
+                }
                 return;
             }
 
-            var favResults = from n in userFavoriteTopics where n.topicDetails.name.ToLower().Contains(query.ToLower()) select n;
-            var genResults = from n in userGeneralTopics where n.topicDetails.name.ToLower().Contains(query.ToLower()) select n;
+            var favResults = new ObservableCollection<Topic>(from n in userFavoriteTopics where n.topicDetails.name.ToLower().Contains(query.ToLower()) select n);
+            var genResults = new ObservableCollection<Topic>(from n in userGeneralTopics where n.topicDetails.name.ToLower().Contains(query.ToLower()) select n);
 
             Lbx_FavoriteTopics.ItemsSource = favResults;
+            if(favResults == null || (favResults.Count == 0))
+            {
+                IsNoDataFavVisible = true;
+            }
+            else
+            {
+                IsNoDataFavVisible = false;
+            }
             Lbx_GeneralTopics.ItemsSource = genResults;
+            if (genResults == null || (genResults.Count == 0))
+            {
+                IsNoDataGeneralVisible = true;
+            }
+            else
+            {
+                IsNoDataGeneralVisible = false;
+            }
         }
 
         private void Btn_Remove_Item_Click(object sender, RoutedEventArgs e)
@@ -372,9 +454,9 @@ namespace Personalised_News_Feed.Controls
             bookmarkItem.Link = selectedEntry.link.href;
             bookmarkItem.LinkTitle = selectedEntry.title;
 
-            foreach(TopicWiseBookmark twBookmark in userBookmark.TopicWiseBookmarks)
+            foreach (TopicWiseBookmark twBookmark in userBookmark.TopicWiseBookmarks)
             {
-                if(twBookmark.TopicName.ToLower().Equals(selectedTopic.topicDetails.name.ToLower()))
+                if (twBookmark.TopicName.ToLower().Equals(selectedTopic.topicDetails.name.ToLower()))
                 {
                     twBookmark.Bookmarks.Add(bookmarkItem);
                     List<BookmarkItem> filteredBookmarkItems = (from n in twBookmark.Bookmarks select n).OrderByDescending(x => x.BookmarkedDate).ToList();

@@ -4,13 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Personalised_News_Feed.Controls"
-             xmlns:converters="clr-namespace:Personalised_News_Feed.Core.Converters"
+             xmlns:converters="clr-namespace:Personalised_News_Feed.Classes.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <!--<Grid.Resources>
-            <converters:ConditionalTextDisplay x:Key="textDisplayConverter" />
-        </Grid.Resources>-->
+        <Grid.Resources>
+            <converters:ElementVisibilityConverter x:Key="visibilityConverter"/>
+            <converters:ElementInverseVisibilityConverter x:Key="inverseVisibilityConverter"></converters:ElementInverseVisibilityConverter>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="320"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -45,7 +46,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="Favorites" HorizontalAlignment="Left" FontSize="20" Margin="0, 0, 0, 10" VerticalAlignment="Center">
                     </TextBlock>
-                    <ListBox Grid.Row="1" Margin="10,0,0,10" x:Name="Lbx_FavoriteTopics" VerticalAlignment="Center" Width="250" SelectionChanged="Lbx_FavoriteTopics_SelectionChanged">
+                    <ListBox Grid.Row="1" Margin="10,0,0,10" x:Name="Lbx_FavoriteTopics" VerticalAlignment="Center" Width="250" SelectionChanged="Lbx_FavoriteTopics_SelectionChanged" Visibility="{Binding IsNoDataFavVisible, Converter={StaticResource inverseVisibilityConverter}}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -68,7 +69,7 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
-
+                    <TextBlock Margin="10,0,0,10" Grid.Row="1" Text="No topic available"  Visibility="{Binding IsNoDataFavVisible, Converter={StaticResource visibilityConverter}}" FontWeight="Bold"></TextBlock>
                 </Grid>
                 <Grid Grid.Row="3" Margin="20, 0, 0, 10">
                     <Grid.RowDefinitions>
@@ -77,7 +78,7 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="General" HorizontalAlignment="Left" FontSize="20" Margin="0, 0, 0, 10" VerticalAlignment="Center">
                     </TextBlock>
-                    <ListBox Grid.Row="1" Margin="10, 0,0,10" x:Name="Lbx_GeneralTopics" Width="250" SelectionChanged="Lbx_GeneralTopics_SelectionChanged">
+                    <ListBox Grid.Row="1" Margin="10, 0,0,10" x:Name="Lbx_GeneralTopics" Width="250" SelectionChanged="Lbx_GeneralTopics_SelectionChanged" Visibility="{Binding IsNoDataGeneralVisible, Converter={StaticResource inverseVisibilityConverter}}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Grid>
@@ -100,7 +101,7 @@
                             </Style>
                         </ListBox.ItemContainerStyle>
                     </ListBox>
-
+                    <TextBlock Margin="10, 0,0,10"  Grid.Row="1" Text="No topic available"  Visibility="{Binding IsNoDataGeneralVisible, Converter={StaticResource visibilityConverter}}" FontWeight="Bold"></TextBlock>
                 </Grid>
             </Grid>
         </ScrollViewer>

@@ -25,6 +25,7 @@ namespace Personalised_News_Feed.Core
 
         [XmlElement("entry")]
         public List<Entry> entities { get; set; }
+
     }
 
     public class Entry
@@ -57,6 +58,16 @@ namespace Personalised_News_Feed.Core
         public string published { get; set; }
         [XmlElement("updated")]
         public string updated { get; set; }
+
+        [XmlIgnore]
+        public DateTime updatedOnDatetime
+        {
+            get
+            {
+                return getUpdatedOnDateTime(updated);
+            }
+        }
+
         [XmlElement("content")]
         public string content_ { get; set; }
         [XmlIgnore]
@@ -76,6 +87,11 @@ namespace Personalised_News_Feed.Core
         [XmlElement("author")]
         public Author author { get; set; }
 
+        private DateTime getUpdatedOnDateTime(string dateString)
+        {
+            string[] items = dateString.Substring(0, dateString.IndexOf('T')).Split('-');
+            return new DateTime(Int32.Parse(items[0]), Int32.Parse(items[1]), Int32.Parse(items[2]));
+        }
     }
 
     public class Author
