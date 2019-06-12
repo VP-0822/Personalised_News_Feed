@@ -6,7 +6,7 @@
         xmlns:controls="clr-namespace:Personalised_News_Feed.Controls"
         xmlns:resX="clr-namespace:Personalised_News_Feed.Properties"
         mc:Ignorable="d"
-        Title="ReadUp"
+        Title="myfeed"
         FlowDirection="{Binding Mode=OneTime, Source={x:Static resX:Resources.flowDirection}}" x:Name="W_Main_Window" Loaded="W_Main_Window_Loaded" Height="700" Width="1200">
     <Grid>
         <Grid.RowDefinitions>
@@ -19,14 +19,14 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="ReadUp" Grid.Column="0" VerticalAlignment="Center" Margin="20,0,0,0" FontWeight="Bold" FontSize="24" Foreground="White" ></TextBlock>
-            <TextBlock Text="Your personalised news feed" Grid.Column="1" VerticalAlignment="Bottom" Margin="5,0,0,12" FontStyle="Italic" Foreground="White" FontSize="16"></TextBlock>
+            <TextBlock Text="myfeed" Grid.Column="0" VerticalAlignment="Center" Margin="20,0,0,0" FontWeight="Bold" FontSize="28" Foreground="White" ></TextBlock>
+            <TextBlock Text="a place for your personalised news feed" Grid.Column="1" VerticalAlignment="Bottom" Margin="5,0,0,12" FontStyle="Italic" Foreground="White" FontSize="14"></TextBlock>
             <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0,0,20,10">
                 <TextBlock Text="Select language" Foreground="White" VerticalAlignment="Center" Margin="0,0,5,0"></TextBlock>
                 <ComboBox Name="Cmb_Languages" Height="20" Width="100" VerticalAlignment="Center" SelectionChanged="Cmb_Languages_SelectionChanged"></ComboBox>
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
