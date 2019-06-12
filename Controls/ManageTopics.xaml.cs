@@ -26,7 +26,20 @@ namespace Personalised_News_Feed.Controls
 
         private Topic _topicContext { get; set; }
 
-        public string showButton { get; set; } = "Visible";
+        private string showButton_ { get; set; } = "Visible";
+
+        public string showButton
+        {
+            get
+            {
+                return showButton_;
+            }
+            set
+            {
+                showButton_ = value;
+                OnPropertyChanged("showButton");
+            }
+        }
 
         private bool isDropdownChanged = false;
 

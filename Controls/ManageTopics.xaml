@@ -16,7 +16,7 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Back to feed" x:Name="Btn_Back_To_Feed" Click="Btn_Back_To_Feed_Click" Width="80" Height="25" Margin="20, 20, 0, 10" Style="{StaticResource RoundButtonTemplate}"></Button>
+            <Button Grid.Column="0" Content="Back" x:Name="Btn_Back_To_Feed" Click="Btn_Back_To_Feed_Click" Width="90" Height="30" Margin="20, 20, 0, 10" Style="{StaticResource RoundButtonTemplate}" FontSize="16"></Button>
             <TextBlock Grid.Column="1" HorizontalAlignment="Left" FontSize="25" Margin="20, 20, 0, 10" VerticalAlignment="Center" Text="{Binding header}"></TextBlock>
         </Grid>
         <Grid Grid.Row="1" Margin="20, 20, 0, 10" Width="350" HorizontalAlignment="Left">
@@ -29,19 +29,19 @@
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="160"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="Topic name" FontSize="16" VerticalAlignment="Center" Margin="10,0,10,0"></TextBlock>
-                <TextBox Grid.Column="1" FontSize="16" VerticalAlignment="Center" Width="200" Text="{Binding topicContext.topicDetails.name}" Height="25" x:Name="Tbx_Topic_Name"></TextBox>
+                <TextBox Grid.Column="1" FontSize="16" VerticalAlignment="Center" Width="180" Text="{Binding topicContext.topicDetails.name}" Height="25" x:Name="Tbx_Topic_Name"></TextBox>
             </Grid>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="160"></ColumnDefinition>
                     <ColumnDefinition Width="Auto"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="Update every?" FontSize="16" VerticalAlignment="Center" Margin="10,0,10,0"></TextBlock>
-                <ComboBox x:Name="Cmb_How_Often" Grid.Column="1" FontSize="14" Width="200" VerticalAlignment="Center" SelectedValuePath="Content" Height="25" VerticalContentAlignment="Top" SelectedValue="{Binding topicContext.howOften}" SelectionChanged="Cmb_How_Often_SelectionChanged">
+                <TextBlock Grid.Column="0" Text="Update feed every?" FontSize="16" VerticalAlignment="Center" Margin="10,0,10,0"></TextBlock>
+                <ComboBox x:Name="Cmb_How_Often" Grid.Column="1" FontSize="14" Width="180" VerticalAlignment="Center" SelectedValuePath="Content" Height="25" VerticalContentAlignment="Top" SelectedValue="{Binding topicContext.howOften}" SelectionChanged="Cmb_How_Often_SelectionChanged">
                     <ComboBoxItem Content="Day"></ComboBoxItem>
                     <ComboBoxItem Content="Week"></ComboBoxItem>
                 </ComboBox>
@@ -49,7 +49,7 @@
             <CheckBox Grid.Row="2" x:Name="Chb_IsFavorite" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16" VerticalContentAlignment="Center" IsChecked="{Binding topicContext.isFavorite}" Checked="Chb_IsFavorite_Checked" Unchecked="Chb_IsFavorite_Checked">
                 <TextBlock Text="Add to favorite" Margin="10,0,0,0"></TextBlock>
             </CheckBox>
-            <Button x:Name="Btn_Add_Button_Submit" Content="Add topic" Width="80" HorizontalAlignment="Right" Margin="0,0,0,0" FontSize="16" Grid.Row="3" Height="30" Visibility="{Binding showButton}" Click="Btn_Add_Button_Submit_Click" Style="{StaticResource RoundButtonTemplate}"></Button>
+            <Button x:Name="Btn_Add_Button_Submit" Content="Add topic" Width="90" HorizontalAlignment="Right" Margin="0,0,0,0" FontSize="16" Grid.Row="3" Height="30" Visibility="{Binding showButton}" Click="Btn_Add_Button_Submit_Click" Style="{StaticResource RoundButtonTemplate}" ></Button>
         </Grid>
     </Grid>
 </UserControl>

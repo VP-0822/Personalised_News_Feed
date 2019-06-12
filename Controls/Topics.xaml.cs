@@ -359,6 +359,11 @@ namespace Personalised_News_Feed.Controls
 
         private void Btn_Remove_Item_Click(object sender, RoutedEventArgs e)
         {
+            MessageBoxResult result = MessageBox.Show("Are you sure you want to remove the topic from the list?", "Remove topic", MessageBoxButton.YesNo);
+            if(result == MessageBoxResult.No)
+            {
+                return;
+            }
             Button removeTopic = (Button)sender;
             int selectedTopicId = (int)removeTopic.Tag;
             List<Topic> selectedTopicsForRemove = (List<Topic>)(from n in userFavoriteTopics where n.topicId == selectedTopicId select n).ToList();
@@ -371,6 +376,7 @@ namespace Personalised_News_Feed.Controls
             {
                 userFavoriteTopics.Remove(selectedTopicForRemove);
                 removedTopics.Add(selectedTopicForRemove);
+                writeToFile();
                 return;
             }
 
@@ -384,9 +390,10 @@ namespace Personalised_News_Feed.Controls
             {
                 userGeneralTopics.Remove(selectedTopicForRemove);
                 removedTopics.Add(selectedTopicForRemove);
+                writeToFile();
                 return;
             }
-
+            
         }
 
         private void Btn_Manage_Item_Click(object sender, RoutedEventArgs e)

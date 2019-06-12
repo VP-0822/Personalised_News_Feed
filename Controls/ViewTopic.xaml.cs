@@ -122,7 +122,7 @@ namespace Personalised_News_Feed.Controls
 
         private void Cmb_HowOften_Selected(object sender, SelectionChangedEventArgs e)
         {
-            if(isDropDownChanged && topics != null)
+            if(isDropDownChanged && topics != null && topics.selectedTopic != null)
             {
                 topics.AddNewTopic(topics.selectedTopic, topics.selectedTopic.topicDetails.name);
             }
