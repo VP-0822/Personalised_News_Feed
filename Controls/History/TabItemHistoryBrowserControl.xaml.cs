@@ -42,5 +42,11 @@ namespace Personalised_News_Feed.Controls
 
             activeX.Silent = true;
         }
+
+        private void Tbk_Refresh_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            TopicHistory entry = (TopicHistory)this.DataContext;
+            Wbs_TabBrowser.Navigate(entry.Link);
+        }
     }
 }

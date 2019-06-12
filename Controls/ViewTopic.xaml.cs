@@ -1,6 +1,7 @@
 ﻿using Personalised_News_Feed.Core;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace Personalised_News_Feed.Controls
 
         private void Img_Add_To_Favorites_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Topics topicsUC = (Topics)((Image)sender).DataContext;
+            Topics topicsUC = (Topics)((TextBlock)sender).DataContext;
 
             if (topicsUC.selectedTopic.isFavorite)
             {

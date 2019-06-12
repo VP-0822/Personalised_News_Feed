@@ -6,36 +6,54 @@
         xmlns:controls="clr-namespace:Personalised_News_Feed.Controls"
         xmlns:resX="clr-namespace:Personalised_News_Feed.Properties"
         mc:Ignorable="d"
-        Title="Personalised News Feed" WindowState="Maximized" WindowStyle="ToolWindow"
-        FlowDirection="{Binding Mode=OneTime, Source={x:Static resX:Resources.flowDirection}}" x:Name="W_Main_Window" Loaded="W_Main_Window_Loaded">
+        Title="Personalised News Feed"
+        FlowDirection="{Binding Mode=OneTime, Source={x:Static resX:Resources.flowDirection}}" x:Name="W_Main_Window" Loaded="W_Main_Window_Loaded" Height="700" Width="1200">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="DarkSlateGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="110"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="ReadUp" Grid.Column="0" VerticalAlignment="Center" Margin="20,0,0,0" FontWeight="Bold" FontSize="20" Foreground="White"></TextBlock>
+            <TextBlock Text="Your personalised news feed" Grid.Column="1" VerticalAlignment="Bottom" Margin="5,0,0,12" FontStyle="Italic" Foreground="White"></TextBlock>
+            <StackPanel Orientation="Horizontal" Grid.Column="2" Margin="0,0,20,10">
+                <TextBlock Text="Select language" Foreground="White" VerticalAlignment="Center" Margin="0,0,5,0"></TextBlock>
+                <ComboBox Name="Cmb_Languages" Height="20" Width="100" VerticalAlignment="Center" SelectionChanged="Cmb_Languages_SelectionChanged"></ComboBox>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-        <!-- Main background for side panel-->
-        <Grid Grid.Column="0" Background="AntiqueWhite" Margin="5,0,0,0">
-            <Grid.RowDefinitions >
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <!--<ComboBox Grid.Row="0" Name="Cmb_Languages" Height="20" Width="80" VerticalAlignment="Bottom" Margin="0,0,0,10" SelectionChanged="Cmb_Languages_SelectionChanged">
+            <!-- Main background for side panel-->
+            <Grid Grid.Column="0" Background="DarkSlateGray" Margin="0,0,0,0">
+                <Grid.RowDefinitions >
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--<ComboBox Grid.Row="0" Name="Cmb_Languages" Height="20" Width="80" VerticalAlignment="Bottom" Margin="0,0,0,10" SelectionChanged="Cmb_Languages_SelectionChanged">
 
             </ComboBox>-->
-            <StackPanel Orientation="Vertical" Grid.Row="0">
-                <ItemsControl x:Name="Itc_Side_Items">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid x:Name="Grd_SideBarItem" MouseUp="Grd_SideBarItem_MouseUp">
-                                <controls:SideBarItemControl DataContext="{Binding}"></controls:SideBarItemControl>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
-            
+                <StackPanel Orientation="Vertical" Grid.Row="0">
+                    <ItemsControl x:Name="Itc_Side_Items">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid x:Name="Grd_SideBarItem" MouseUp="Grd_SideBarItem_MouseUp">
+                                    <controls:SideBarItemControl DataContext="{Binding}"></controls:SideBarItemControl>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+            </Grid>
+            <ContentControl Content="{Binding DisplayUserControl}" Grid.Column="1"/>
         </Grid>
-        <ContentControl Content="{Binding DisplayUserControl}" Grid.Column="1"/>
-        
     </Grid>
 </Window>

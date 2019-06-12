@@ -36,7 +36,7 @@ namespace Personalised_News_Feed.Controls
             currentEntry = historyUC.globalSelectedEntry;
         }
 
-        private void Tbk_Close_X_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Btn_Close_X_MouseUp(object sender, RoutedEventArgs e)
         {
             TabItem selectedItem = null;
             foreach (TabItem ti in historyUC.Tct_Topic_Tabs.Items)
@@ -59,7 +59,7 @@ namespace Personalised_News_Feed.Controls
 
             if(historyUC.Tct_Topic_Tabs.Items.Count == 0)
             {
-                historyUC.NoTabVisibility = "Visible";
+                historyUC.IsNoTabVisible = true;
             }
         }
     }

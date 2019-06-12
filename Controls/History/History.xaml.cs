@@ -33,8 +33,6 @@ namespace Personalised_News_Feed.Controls
 
         public ObservableCollection<TopicHistory> restHistory { get; set; }
 
-        private string NoDataTodayVisibility_ { get; set; } = "Visible";
-
         public TopicHistory globalSelectedEntry { get; set; }
 
         public string tagHeader
@@ -45,49 +43,51 @@ namespace Personalised_News_Feed.Controls
             }
         }
 
-        public string NoDataTodayVisibility
+        private bool IsNoDataTodayVisible_ { get; set; }
+
+        public bool IsNoDataTodayVisible
         {
-            get { return NoDataTodayVisibility_; }
+            get { return IsNoDataTodayVisible_; }
             set
             {
-                NoDataTodayVisibility_ = value;
-                OnPropertyChanged("NoDataTodayVisibility");
+                IsNoDataTodayVisible_ = value;
+                OnPropertyChanged("IsNoDataTodayVisible");
             }
         }
 
-        private string NoDataWeekVisibility_ { get; set; } = "Visible";
-        public string NoDataWeekVisibility
+        private bool IsNoDataWeekVisible_ { get; set; }
+
+        public bool IsNoDataWeekVisible
         {
-            get { return NoDataWeekVisibility_; }
+            get { return IsNoDataWeekVisible_; }
             set
             {
-                NoDataWeekVisibility_ = value;
-                OnPropertyChanged("NoDataWeekVisibility");
+                IsNoDataWeekVisible_ = value;
+                OnPropertyChanged("IsNoDataWeekVisible");
             }
         }
 
-        public string NoDataAllVisibility_ { get; set; } = "Visible";
-        public string NoDataAllVisibility
+        private bool IsNoDataAllVisible_ { get; set; }
+
+        public bool IsNoDataAllVisible
         {
-            get { return NoDataAllVisibility_; }
+            get { return IsNoDataAllVisible_; }
             set
             {
-                NoDataAllVisibility_ = value;
-                OnPropertyChanged("NoDataAllVisibility");
+                IsNoDataAllVisible_ = value;
+                OnPropertyChanged("IsNoDataAllVisible");
             }
         }
 
-        public string NoTabVisibility_ { get; set; } = "Visible";
-        public string NoTabVisibility
+        private bool IsNoTabVisible_ { get; set; }
+
+        public bool IsNoTabVisible
         {
-            get
-            {
-                return NoTabVisibility_;
-            }
+            get { return IsNoTabVisible_; }
             set
             {
-                NoTabVisibility_ = value;
-                OnPropertyChanged("NoTabVisibility");
+                IsNoTabVisible_ = value;
+                OnPropertyChanged("IsNoTabVisible");
             }
         }
 
@@ -98,6 +98,7 @@ namespace Personalised_News_Feed.Controls
             filterHistoryByTime(userHistory.Histories);
             bindItemsToUI();
             this.DataContext = this;
+            IsNoTabVisible = true;
         }
 
 
@@ -144,7 +145,7 @@ namespace Personalised_News_Feed.Controls
 
         private void Grd_HistoryEntry_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            NoTabVisibility = "Hidden";
+            IsNoTabVisible = false;
             Grid selectedGrid = (Grid)sender;
             TopicHistory selectedEntry = (TopicHistory)selectedGrid.DataContext;
             globalSelectedEntry = selectedEntry;
@@ -178,29 +179,29 @@ namespace Personalised_News_Feed.Controls
             Itc_All_History.ItemsSource = restHistory;
             if (todayHistory.Count > 0)
             {
-                NoDataTodayVisibility = "Hidden";
+                IsNoDataTodayVisible = false;
             }
             else
             {
-                NoDataTodayVisibility = "Visible";
+                IsNoDataTodayVisible = true;
             }
 
             if (weekHistory.Count > 0)
             {
-                NoDataWeekVisibility = "Hidden";
+                IsNoDataWeekVisible = false;
             }
             else
             {
-                NoDataWeekVisibility = "Visible";
+                IsNoDataWeekVisible = true;
             }
 
             if (restHistory.Count > 0)
             {
-                NoDataAllVisibility = "Hidden";
+                IsNoDataAllVisible = false;
             }
             else
             {
-                NoDataAllVisibility = "Visible";
+                IsNoDataAllVisible = true;
             }
         }
 

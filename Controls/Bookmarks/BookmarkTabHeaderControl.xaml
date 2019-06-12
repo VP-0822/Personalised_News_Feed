@@ -12,6 +12,6 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBlock Text="{Binding tagHeader}" Grid.Column="0"></TextBlock>
-        <TextBlock Text="X" Grid.Column="1" Margin="10,0,5,0" x:Name="Tbk_Close_X" MouseUp="Tbk_Close_X_MouseUp" FontWeight="Bold"></TextBlock>
+        <Button Grid.Column="1" Content="X" x:Name="Btn_Close_X" Click="Btn_Close_X_MouseUp" Tag="{Binding topicId}" Style="{StaticResource RedButtonTemplate}" FontWeight="Bold" ToolTip="Close window" Width="15" Margin="5,0,0,0"></Button>
     </Grid>
 </UserControl>

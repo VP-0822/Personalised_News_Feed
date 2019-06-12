@@ -41,8 +41,9 @@ namespace Personalised_News_Feed.Classes.Core
             set
             {
                 isFavorite_ = value;
+                isUnFavorite = !value;
                 OnPropertyChanged("isFavorite");
-                OnPropertyChanged("favoriteIcon");
+                OnPropertyChanged("isUnFavorite");
             }
         }
 
@@ -50,30 +51,24 @@ namespace Personalised_News_Feed.Classes.Core
         private bool isFavorite_;
 
         [XmlIgnore]
+        public bool isUnFavorite
+        {
+            get { return isUnFavorite_; }
+            set
+            {
+                isUnFavorite_ = value;
+                OnPropertyChanged("isFavorite");
+            }
+        }
+
+        [XmlIgnore]
+        private bool isUnFavorite_;
+
+        [XmlIgnore]
         public RSSTopic topicDetails { get; set; }
 
         [XmlIgnore]
         public TopicFeed topicFeed { get; set; }
-
-        [XmlIgnore]
-        public string favoriteIcon
-        {
-            get
-            {
-                if(isFavorite)
-                {
-                    return @"..\Resources\Images\Icons\bookmark_done.png";
-                }
-                else
-                {
-                    return @"..\Resources\Images\Icons\bookmark_undone.png";
-                }
-            }
-            set
-            {
-                favoriteIcon = value;
-            }
-        }
 
         private void OnPropertyChanged(string v)
         {

@@ -51,9 +51,6 @@ namespace Personalised_News_Feed
         public MainWindow()
         {
 
-            //InitializeUIComponents();
-            //WelcomePage welcome = new WelcomePage();
-            //frm_main.NavigationService.Navigate(welcome);
             string language = Properties.Settings.Default.language;
             Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(language);
             Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo(language);
@@ -85,8 +82,7 @@ namespace Personalised_News_Feed
                 cultureItems.Add(item);
             }
 
-            //Cmb_Languages.ItemsSource = cultureItems;
-            //Cmb_Languages.SelectedItem = cultureItems[0];
+            Cmb_Languages.ItemsSource = cultureItems;
         }
 
         private void OnPropertyChanged(string v)
@@ -141,9 +137,14 @@ namespace Personalised_News_Feed
         {
             ComboBox cultureComboBox = (ComboBox)sender;
             var cultureText = ((ComboBoxItem)cultureComboBox.SelectedItem).Content.ToString().Split(' ')[0];
-            Properties.Settings.Default.language = cultureText;
-            Properties.Settings.Default.Save();
-            Close();
+            
+            MessageBoxResult result = MessageBox.Show("Application will be closed to effect language change. Do you want to continue", "Language changed",MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if(MessageBoxResult.Yes == result)
+            {
+                Properties.Settings.Default.language = cultureText;
+                Properties.Settings.Default.Save();
+                Close();
+            }
         }
 
         //private IEnumerable<string> GetAvailableCultures()

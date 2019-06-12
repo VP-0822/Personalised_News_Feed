@@ -25,17 +25,15 @@ namespace Personalised_News_Feed.Controls
     {
         public UserBookmark userBookmark { get; set; }
 
-        public string NoTabVisibility_ { get; set; } = "Visible";
-        public string NoTabVisibility
+        private bool IsNoTabVisible_ { get; set; }
+
+        public bool IsNoTabVisible
         {
-            get
-            {
-                return NoTabVisibility_;
-            }
+            get { return IsNoTabVisible_; }
             set
             {
-                NoTabVisibility_ = value;
-                OnPropertyChanged("NoTabVisibility");
+                IsNoTabVisible_ = value;
+                OnPropertyChanged("IsNoTabVisible");
             }
         }
 
@@ -56,6 +54,7 @@ namespace Personalised_News_Feed.Controls
             loadBookmarks();
             Itc_Topic_Bookmarks.ItemsSource = userBookmark.TopicWiseBookmarks;
             this.DataContext = this;
+            IsNoTabVisible = true;
         }
 
         public void loadBookmarks()
@@ -84,12 +83,23 @@ namespace Personalised_News_Feed.Controls
 
         private void Tbx_filter_TextChanged(object sender, TextChangedEventArgs e)
         {
+            TextBox filterBox = (TextBox)sender;
+            string filterString = filterBox.Text;
 
+            if (string.IsNullOrEmpty(filterString))
+            {
+                Itc_Topic_Bookmarks.ItemsSource = userBookmark.TopicWiseBookmarks;
+                return;
+            }
+
+            List<TopicWiseBookmark> topicBookmarks = (from n in userBookmark.TopicWiseBookmarks where n.TopicName.ToLower().Contains(filterString.ToLower()) select n).ToList();
+            Itc_Topic_Bookmarks.ItemsSource = topicBookmarks;
         }
+
 
         private void Grd_BookmarkEntry_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            NoTabVisibility = "Hidden";
+            IsNoTabVisible = false;
             Grid selectedGrid = (Grid)sender;
             BookmarkItem selectedEntry = (BookmarkItem)selectedGrid.DataContext;
             globalSelectedEntry = selectedEntry;

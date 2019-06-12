@@ -4,15 +4,19 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Personalised_News_Feed.Controls"
+             xmlns:converters ="clr-namespace:Personalised_News_Feed.Classes.Converter"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <Grid.Resources>
+            <converters:ElementVisibilityConverter x:Key="visibilityConverter"/>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
-            <Grid Background="Lavender">
+            <Grid Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"></RowDefinition>
                     <RowDefinition Height="60"></RowDefinition>
@@ -36,9 +40,11 @@
                                         <RowDefinition Height="Auto"></RowDefinition>
                                         <RowDefinition Height="Auto"></RowDefinition>
                                     </Grid.RowDefinitions>
-                                    <TextBlock Grid.Row="0" Text="{Binding TopicName}" HorizontalAlignment="Left" FontSize="20" Margin="0, 0, 0, 10" VerticalAlignment="Center">
-                                    </TextBlock>
-                                    <ItemsControl Grid.Row="1" ItemsSource="{Binding Bookmarks}">
+                                    <Expander Grid.Row="0"  IsExpanded="True" ExpandDirection="Down">
+                                        <Expander.Header>
+                                            <TextBlock Text="{Binding TopicName}" FontSize="20"></TextBlock>
+                                        </Expander.Header>
+                                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Bookmarks}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <Grid UIElement.PreviewMouseDown="Grd_BookmarkEntry_PreviewMouseDown">
@@ -49,7 +55,7 @@
                                                                 <RowDefinition Height="*"></RowDefinition>
                                                                 <RowDefinition Height="Auto"></RowDefinition>
                                                             </Grid.RowDefinitions>
-                                                            <TextBlock Text="{Binding BookmarkedDate}" TextWrapping="Wrap" Grid.Row="0" FontStyle="Italic" FontSize="11" HorizontalAlignment="Right"></TextBlock>
+                                                                <TextBlock Text="{Binding BookmarkedDate, StringFormat='Bookmarked on: {0}'}" TextWrapping="Wrap" Grid.Row="0" FontStyle="Italic" FontSize="11" HorizontalAlignment="Right"></TextBlock>
                                                             <TextBlock Text="{Binding LinkTitle}" Grid.Row="1" TextWrapping="Wrap" FontSize="12" FontWeight="Bold"></TextBlock>
                                                             <TextBlock Text="{Binding Link}" Grid.Row="2" TextWrapping="Wrap" FontSize="11"></TextBlock>
                                                         </Grid>
@@ -58,6 +64,7 @@
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                     </ItemsControl>
+                                    </Expander>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -65,7 +72,7 @@
                 </Grid>
             </Grid>
         </ScrollViewer>
-        <Grid Background="Lavender" Grid.Column="1">
+        <Grid Background="WhiteSmoke" Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="70"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -75,7 +82,7 @@
                 <TabControl TabStripPlacement="Top" x:Name="Tct_Bookmark_Tabs">
                 </TabControl>
             </Grid>
-            <Grid Grid.Row="1" Margin="10, 20, 10, 10" Visibility="{Binding NoTabVisibility}" Background="Lavender">
+            <Grid Grid.Row="1" Margin="10, 20, 10, 10" Visibility="{Binding IsNoTabVisible, Converter={StaticResource visibilityConverter}}" Background="WhiteSmoke">
                 <TextBlock Text="Please select atleast one bookmark link." FontSize="16" FontWeight="Bold" Margin="10"></TextBlock>
             </Grid>
 

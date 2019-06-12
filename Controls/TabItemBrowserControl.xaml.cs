@@ -47,11 +47,17 @@ namespace Personalised_News_Feed.Controls
             activeX.Silent = true;
         }
 
-        private void Btn_Add_Bookmark_Click(object sender, RoutedEventArgs e)
+        private void Tbk_Add_Bookmark_Mouse_Up(object sender, RoutedEventArgs e)
         {
-            Button button = (Button)sender;
-            Entry entry = (Entry)button.DataContext;
+            TextBlock textBlock = (TextBlock)sender;
+            Entry entry = (Entry)textBlock.DataContext;
             topics.writeBookmarkToFile(entry);
+        }
+
+        private void Tbk_Refresh_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Entry entry = (Entry)this.DataContext;
+            Wbs_TabBrowser.Navigate(entry.link.href);
         }
     }
 }

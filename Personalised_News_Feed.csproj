@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Classes\Converter\ElementVisibilityConverter.cs" />
     <Compile Include="Classes\Core\Converters\ConditionalTextDisplay.cs" />
     <Compile Include="Classes\Core\UserBookmark.cs" />
     <Compile Include="Classes\Core\UserHistory.cs" />
@@ -103,9 +104,6 @@
     </Compile>
     <Compile Include="Controls\ViewTopic.xaml.cs">
       <DependentUpon>ViewTopic.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WelcomePage.xaml.cs">
-      <DependentUpon>WelcomePage.xaml</DependentUpon>
     </Compile>
     <Page Include="Controls\Bookmarks\Bookmarks.xaml">
       <SubType>Designer</SubType>
@@ -167,10 +165,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="WelcomePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

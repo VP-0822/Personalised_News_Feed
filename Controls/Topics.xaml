@@ -18,7 +18,7 @@
 
         <!-- Topics List Section Starts-->
         <ScrollViewer Grid.Column="0" VerticalScrollBarVisibility="Auto">
-            <Grid Background="Lavender">
+            <Grid Background="White">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="60"></RowDefinition>
                     <RowDefinition Height="60"></RowDefinition>
@@ -36,7 +36,7 @@
                         <TextBlock Text="Filter for topic:" HorizontalAlignment="Left" FontSize="13"/>
                         <TextBox Width="150" Grid.Column="0" Height="25" x:Name="Tbx_filter" TextChanged="Tbx_filter_TextChanged"/>
                     </StackPanel>
-                    <Button Content="Add topic" x:Name="Btn_Add_Topic" Click="Btn_Add_Topic_Click" Width="80" Grid.Column="1" Height="25" Margin="0,10,10,0"/>
+                    <Button Content="Add topic" x:Name="Btn_Add_Topic" Click="Btn_Add_Topic_Click" Width="80" Grid.Column="1" Height="25" Margin="0,10,10,0" Style="{StaticResource RoundButtonTemplate}"/>
                 </Grid>
                 <Grid Grid.Row="2" Margin="20, 0, 0, 10">
                     <Grid.RowDefinitions>
@@ -57,8 +57,8 @@
                                     <TextBlock FontSize="16">
                                     <Run Text="{Binding topicDetails.name}"></Run>
                                     </TextBlock>
-                                    <Button Grid.Column="1" Content="..." x:Name="Btn_Manage_Item" Click="Btn_Manage_Item_Click" Tag="{Binding topicId}" Margin="0,0,5,0"></Button>
-                                    <Button Grid.Column="2" Content="X" x:Name="Btn_Remove_Item" Click="Btn_Remove_Item_Click" Tag="{Binding topicId}"></Button>
+                                    <Button Grid.Column="1" Content="&#x2022;&#x2022;&#x2022;" x:Name="Btn_Manage_Item" Click="Btn_Manage_Item_Click" Tag="{Binding topicId}" Margin="0,0,5,0" FontWeight="Bold" Style="{StaticResource ManageButtonTemplate}" VerticalContentAlignment="Center" ToolTip="Select to edit topic"></Button>
+                                    <Button Grid.Column="2" Content="X" x:Name="Btn_Remove_Item" Click="Btn_Remove_Item_Click" Tag="{Binding topicId}" Style="{StaticResource RedButtonTemplate}" FontWeight="Bold" ToolTip="Remove topic"></Button>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
@@ -89,8 +89,8 @@
                                     <TextBlock FontSize="16">
                                     <Run Text="{Binding topicDetails.name}" ></Run>
                                     </TextBlock>
-                                    <Button Grid.Column="1" Content="..." x:Name="Btn_Manage_Item" Click="Btn_Manage_Item_Click" Tag="{Binding topicId}" Margin="0,0,5,0"></Button>
-                                    <Button Grid.Column="2" Content="X" x:Name="Btn_Remove_Item" Click="Btn_Remove_Item_Click" Tag="{Binding topicId}"></Button>
+                                    <Button Grid.Column="1" Content="&#x2022;&#x2022;&#x2022;" x:Name="Btn_Manage_Item" Click="Btn_Manage_Item_Click" Tag="{Binding topicId}" Margin="0,0,5,0" FontWeight="Bold" Style="{StaticResource ManageButtonTemplate}" VerticalContentAlignment="Center" ToolTip="Select to edit topic"></Button>
+                                    <Button Grid.Column="2" Content="X" x:Name="Btn_Remove_Item" Click="Btn_Remove_Item_Click" Tag="{Binding topicId}" Style="{StaticResource RedButtonTemplate}" FontWeight="Bold" ToolTip="Remove topic"></Button>
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

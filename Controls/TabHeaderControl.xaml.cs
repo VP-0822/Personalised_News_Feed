@@ -29,7 +29,7 @@ namespace Personalised_News_Feed.Controls
             InitializeComponent();
         }
 
-        private void Tbk_Close_X_MouseUp(object sender, MouseButtonEventArgs e)
+        private void Btn_Close_X_MouseUp(object sender, RoutedEventArgs e)
         {
             TabItem selectedItem = null;
             foreach(TabItem ti in viewTopicUC.Tct_Topic_Tabs.Items)

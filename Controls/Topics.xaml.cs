@@ -85,11 +85,11 @@ namespace Personalised_News_Feed.Controls
             if (isManageTopics)
             {
                 //TopicUserControl = new ManageTopics(this, selectedTopic);
-                TopicUserControl = new ManageTopics();
+                TopicUserControl = new ManageTopics() { DataContext = this};
             }
             else
             {
-                TopicUserControl = new ViewTopic();
+                TopicUserControl = new ViewTopic() { DataContext = this };
             }
         }
 
@@ -162,11 +162,11 @@ namespace Personalised_News_Feed.Controls
             if (isManageTopics)
             {
                 //TopicUserControl = new ManageTopics(this, selectedTopic);
-                TopicUserControl = new ManageTopics();
+                TopicUserControl = new ManageTopics() { DataContext = this };
             }
             else
             {
-                TopicUserControl = new ViewTopic();
+                TopicUserControl = new ViewTopic() { DataContext = this };
             }
         }
 
@@ -186,11 +186,11 @@ namespace Personalised_News_Feed.Controls
             if (isManageTopics)
             {
                 //TopicUserControl = new ManageTopics(this, selectedTopic);
-                TopicUserControl = new ManageTopics();
+                TopicUserControl = new ManageTopics() { DataContext = this };
             }
             else
             {
-                TopicUserControl = new ViewTopic();
+                TopicUserControl = new ViewTopic() { DataContext = this };
             }
         }
 
@@ -245,7 +245,7 @@ namespace Personalised_News_Feed.Controls
                 userGeneralTopics.Add(newTopic);
             }
             selectedTopic = newTopic;
-            TopicUserControl = new ManageTopics();
+            TopicUserControl = new ManageTopics() { DataContext = this };
             writeToFile();
         }
 
@@ -254,7 +254,7 @@ namespace Personalised_News_Feed.Controls
             isManageTopics = true;
             //TopicUserControl = new ManageTopics(this, null);
             selectedTopic = null;
-            TopicUserControl = new ManageTopics();
+            TopicUserControl = new ManageTopics() { DataContext = this };
         }
 
         private void Tbx_filter_TextChanged(object sender, TextChangedEventArgs e)
